@@ -333,6 +333,22 @@
             display: none;
         }
 
+        .raid-slot.filled::before {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            z-index: 2;
+            display: block;
+            pointer-events: none;
+            border-radius: 4px;
+            background:
+                linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 34%),
+                radial-gradient(circle at 50% 100%, var(--role-outline-glow), transparent 68%);
+            box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.42);
+            opacity: 0.72;
+            mix-blend-mode: screen;
+        }
+
         .raid-slot.filled::after {
             content: "";
             position: absolute;
@@ -340,9 +356,13 @@
             z-index: 4;
             pointer-events: none;
             border-radius: 6px;
-            padding: 2px;
-            background: linear-gradient(135deg, var(--role-outline-start), var(--role-outline-end));
-            box-shadow: 0 0 12px var(--role-outline-glow);
+            padding: 3px;
+            background:
+                linear-gradient(135deg, var(--role-outline-start), rgba(255, 255, 255, 0.82) 48%, var(--role-outline-end)),
+                linear-gradient(315deg, var(--role-outline-end), var(--role-outline-start));
+            box-shadow:
+                0 0 18px var(--role-outline-glow),
+                inset 0 0 10px rgba(255, 255, 255, 0.16);
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -354,8 +374,26 @@
         }
 
         .raid-slot.filled {
-            border-color: var(--accent);
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.055);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow:
+                0 0 14px var(--role-outline-glow),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.085),
+                inset 0 0 18px rgba(0, 0, 0, 0.42);
+        }
+
+        .raid-slot.filled:hover {
+            border-color: rgba(255, 255, 255, 0.34);
+            box-shadow:
+                0 0 22px var(--role-outline-glow),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.13),
+                inset 0 0 18px rgba(0, 0, 0, 0.36);
+        }
+
+        .raid-slot.filled:hover::after {
+            padding: 4px;
+            box-shadow:
+                0 0 24px var(--role-outline-glow),
+                inset 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
         .raid-slot .spec-initials {
