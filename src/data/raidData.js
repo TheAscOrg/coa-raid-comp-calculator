@@ -353,7 +353,7 @@ export const SPEC_ICON_FILENAMES = {
         ETERNAL: "ability_racial_viciousness"
     },
     PYROMANCER: {
-        FLAMEWEAVING: "custom_T_Phoenix_Border",
+        FLAMEWEAVING: "Ability_Warlock_Backdraft",
         DRACONIC: "inv_misc_head_dragon_bronze",
         INCINERATION: "nhi_corruptionfire_Border"
     },
