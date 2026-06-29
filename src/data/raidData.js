@@ -11,8 +11,9 @@ export const DB = {
         ]
     },
     "WITCHDOCTOR": {
-        classBuffs: ["Small All Resist", "Flat Intellect", "Flat Spirit", "Mp5"],
+        classBuffs: ["Small All Resist", "Flat Intellect", "Flat Spirit", "Mp5", "Cost Reduction (5%)"],
         classResists: [],
+        classDebuffs: ["Cast Slow 30%"],
         specs: [
             { name: "SHADOWHUNTING", role: "CASTER", buffs: ["Melee/Range Haste (10%)", "Spell Haste (3%)", "Attack Power %"], debuffs: ["Resistance REDUCTION"] },
             { name: "VOODOO", role: "CASTER", buffs: ["Spell Haste (3%)", "All Damage Done (3%)"], debuffs: ["Attack Speed (Slow)", "Resistance REDUCTION"] },
@@ -439,4 +440,3 @@ export const SPEC_DISPLAY_NAMES = {
     ROT: "Rot",
     ROTWEAVER: "Rot"
 };
-

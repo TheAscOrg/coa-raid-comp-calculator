@@ -62,7 +62,7 @@ function App() {
     const counts = {};
     roster.forEach((slot) => {
       if (!slot) return;
-      [...slot.classBuffs, ...slot.classResists, ...slot.specBuffs, ...slot.specDebuffs].forEach((name) => {
+      [...slot.classBuffs, ...slot.classResists, ...slot.classDebuffs, ...slot.specBuffs, ...slot.specDebuffs].forEach((name) => {
         const id = simplify(name);
         counts[id] = (counts[id] || 0) + 1;
       });
@@ -93,6 +93,7 @@ function App() {
         role: specData.role,
         classBuffs: classData.classBuffs || [],
         classResists: classData.classResists || [],
+        classDebuffs: classData.classDebuffs || [],
         specBuffs: specData.buffs || [],
         specDebuffs: specData.debuffs || [],
       };
@@ -204,7 +205,7 @@ function App() {
   const showSpecPreview = (event, item) => {
     const previewData = specPreviewData(item.className, item.specName);
     setTooltip(buildTooltip(event, previewData));
-    setPreviewBuffIds(new Set([...previewData.classBuffs, ...previewData.classResists, ...previewData.specBuffs, ...previewData.specDebuffs].map(simplify)));
+    setPreviewBuffIds(new Set([...previewData.classBuffs, ...previewData.classResists, ...previewData.classDebuffs, ...previewData.specBuffs, ...previewData.specDebuffs].map(simplify)));
   };
 
   const clearSpecPreview = () => {
@@ -441,7 +442,9 @@ function Tooltip({ tooltip }) {
       <div className="tooltip-body">
         <TooltipList title="Class Buffs" items={[...tooltip.data.classBuffs, ...tooltip.data.classResists]} />
         <TooltipList title="Spec Buffs" items={tooltip.data.specBuffs} />
-        {!!tooltip.data.specDebuffs.length && <TooltipList title="Boss Debuffs" items={tooltip.data.specDebuffs} debuff />}
+        {!![...tooltip.data.classDebuffs, ...tooltip.data.specDebuffs].length && (
+          <TooltipList title="Boss Debuffs" items={[...tooltip.data.classDebuffs, ...tooltip.data.specDebuffs]} debuff />
+        )}
       </div>
     </div>
   );
@@ -462,6 +465,7 @@ function collectBuffIds(className, spec) {
   return [
     ...(DB[className].classBuffs || []),
     ...(DB[className].classResists || []),
+    ...(DB[className].classDebuffs || []),
     ...(spec.buffs || []),
     ...(spec.debuffs || []),
   ].map(simplify);
@@ -475,6 +479,7 @@ function specPreviewData(className, specName) {
     specName,
     classBuffs: classData.classBuffs || [],
     classResists: classData.classResists || [],
+    classDebuffs: classData.classDebuffs || [],
     specBuffs: specData.buffs || [],
     specDebuffs: specData.debuffs || [],
   };
