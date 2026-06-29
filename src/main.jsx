@@ -439,9 +439,9 @@ function Tooltip({ tooltip }) {
         <span>{formatClassName(tooltip.data.class)}</span>
       </div>
       <div className="tooltip-body">
-        <TooltipList title="# Class Buffs" items={[...tooltip.data.classBuffs, ...tooltip.data.classResists]} />
-        <TooltipList title="# Spec Buffs" items={tooltip.data.specBuffs} />
-        {!!tooltip.data.specDebuffs.length && <TooltipList title="# Boss Debuffs" items={tooltip.data.specDebuffs} debuff />}
+        <TooltipList title="Class Buffs" items={[...tooltip.data.classBuffs, ...tooltip.data.classResists]} />
+        <TooltipList title="Spec Buffs" items={tooltip.data.specBuffs} />
+        {!!tooltip.data.specDebuffs.length && <TooltipList title="Boss Debuffs" items={tooltip.data.specDebuffs} debuff />}
       </div>
     </div>
   );
