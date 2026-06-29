@@ -1,0 +1,944 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+            --bg: #0a0b0c;
+            --panel: #151719;
+            --panel-2: #202326;
+            --line: #5c6367;
+            --line-on: #c6d1d2;
+            --text: #eef1f2;
+            --muted: #aeb6b9;
+            --accent: #c8d0d2;
+            --accent-rgb: 200, 208, 210;
+            --teal: #57b9a8;
+            --teal-rgb: 87, 185, 168;
+            --red: #b74b42;
+            --red-rgb: 183, 75, 66;
+            --inactive: #363b3e;
+            --slot-bg: #0d0f10;
+            --slot-border: #565e62;
+            --active-green: #58df9a;
+            --active-text: #f6f1e8;
+            --text-inactive: #858b8e;
+            --preview-glow: #e4eaec;
+            --marble: #101214;
+            --menu-marble: #1b1e20;
+            --black-marble: #070808;
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            --class-barbarian: #C79C6E;
+            --class-witchdoctor: #0070DE;
+            --class-felsworn: #A330C9;
+            --class-witchhunter: #ABD473;
+            --class-stormbringer: #00FF96;
+            --class-cultist: #9482C9;
+            --class-knightofxoroth: #C41F3B;
+            --class-knightxoroth: #C41F3B;
+            --class-guardian: #FFF569;
+            --class-starcaller: #40C7EB;
+            --class-suncleric: #F58CBA;
+            --class-templar: #F0E68C;
+            --class-primalist: #FF7D0A;
+            --class-bloodmage: #880000;
+            --class-pyromancer: #69CCF0;
+            --class-runemaster: #FF00FF;
+            --class-ranger: #ABD473;
+            --class-reaper: #8787ED;
+            --class-chronomancer: #FFB81C;
+            --class-necromancer: #3FC7EB;
+            --class-venomancer: #00FF96;
+            --class-tinker: #A9D271;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        * {
+            scrollbar-color: #6a7073 rgba(5, 6, 7, 0.5);
+            scrollbar-width: thin;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(5, 6, 7, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #535a5d;
+            border: 2px solid rgba(5, 6, 7, 0.72);
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6a7073;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            min-width: 1120px;
+            color: var(--text);
+            background: var(--marble);
+            background-attachment: fixed;
+        }
+
+        .app-shell {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 720px 1fr;
+        }
+
+        .class-rail {
+            min-width: 0;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-right: 1px solid #34383b;
+            background: var(--menu-marble);
+            padding: 8px 10px;
+        }
+
+        .rail-title {
+            color: var(--muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .spec-rail-title {
+            margin-top: 6px;
+        }
+
+        .workspace {
+            min-width: 0;
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        .topbar {
+            display: grid;
+            grid-template-columns: minmax(260px, 1fr) auto;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 22px 12px;
+            border-bottom: 1px solid #34383b;
+            background: var(--menu-marble);
+        }
+
+        .class-heading {
+            min-width: 0;
+            display: grid;
+            grid-template-columns: 52px minmax(0, 1fr);
+            align-items: center;
+            gap: 13px;
+        }
+
+        .class-heading > div {
+            min-width: 0;
+        }
+
+        .class-header-icon {
+            width: 48px;
+            height: 48px;
+            display: block;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background-color: #0b0c0d;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1), 0 0 18px rgba(var(--accent-rgb), 0.15);
+        }
+
+        .data-status {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tree-stage {
+            position: relative;
+            min-height: 0;
+            overflow: hidden;
+            border: 1px solid rgba(var(--accent-rgb), 0.26);
+            background: var(--black-marble);
+            background-size: auto, auto, cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.035) inset, 0 16px 42px rgba(0, 0, 0, 0.38);
+        }
+
+        .tree-stage::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 48px;
+            z-index: 0;
+            pointer-events: none;
+            background: #151719;
+            border-bottom: 1px solid rgba(var(--accent-rgb), 0.16);
+            box-shadow: inset 0 1px 0 rgba(var(--accent-rgb), 0.11);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.12);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: minmax(390px, 450px) minmax(660px, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1680px;
+            align-items: start;
+        }
+
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .raid-composition {
+            display: grid;
+            grid-template-columns: max-content minmax(138px, 1fr);
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .raid-roster {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            background: var(--black-marble);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .raid-group {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 4px;
+        }
+
+        .raid-group-label {
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .raid-group-slots {
+            display: grid;
+            grid-template-columns: repeat(5, 76px);
+            gap: 7px;
+        }
+
+        .raid-slot {
+            --role-outline-start: rgba(244, 211, 129, 0.9);
+            --role-outline-end: rgba(156, 112, 38, 0.88);
+            --role-outline-glow: rgba(244, 211, 129, 0.2);
+            aspect-ratio: 1;
+            background-color: var(--slot-bg);
+            border: 1px solid var(--slot-border);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.16s ease, box-shadow 0.16s ease;
+            overflow: hidden;
+            user-select: none;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .raid-slot.filled {
+            cursor: grab;
+        }
+
+        .raid-slot.role-tank {
+            --role-outline-start: rgba(91, 188, 255, 0.95);
+            --role-outline-end: rgba(36, 104, 255, 0.9);
+            --role-outline-glow: rgba(76, 159, 255, 0.28);
+        }
+
+        .raid-slot.role-healer {
+            --role-outline-start: rgba(89, 231, 142, 0.95);
+            --role-outline-end: rgba(22, 142, 83, 0.9);
+            --role-outline-glow: rgba(72, 214, 129, 0.26);
+        }
+
+        .raid-slot.role-support {
+            --role-outline-start: rgba(255, 220, 99, 0.96);
+            --role-outline-end: rgba(219, 132, 35, 0.92);
+            --role-outline-glow: rgba(255, 188, 58, 0.28);
+        }
+
+        .raid-slot.role-dps {
+            --role-outline-start: rgba(255, 103, 91, 0.96);
+            --role-outline-end: rgba(176, 35, 35, 0.92);
+            --role-outline-glow: rgba(234, 62, 52, 0.28);
+        }
+
+        .raid-slot.filled:active {
+            cursor: grabbing;
+        }
+
+        .raid-slot.dragging {
+            opacity: 0.55;
+            border-color: #f4d381;
+        }
+
+        .raid-slot.drop-target {
+            border-color: #f4d381;
+            box-shadow: 0 0 16px rgba(244, 211, 129, 0.26), inset 0 0 0 1px rgba(244, 211, 129, 0.18);
+        }
+
+        .raid-slot::before {
+            display: none;
+        }
+
+        .raid-slot.filled::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            border-radius: 6px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--role-outline-start), var(--role-outline-end));
+            box-shadow: 0 0 12px var(--role-outline-glow);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+        }
+
+        .raid-slot:hover {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.12);
+        }
+
+        .raid-slot.filled {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.055);
+        }
+
+        .raid-slot .spec-initials {
+            z-index: 2;
+            color: #fffaf0;
+            font-size: 10px;
+            font-weight: 900;
+            line-height: 1.1;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.78);
+        }
+
+        .raid-slot .placeholder-text {
+            z-index: 1;
+            color: #777f83;
+            font-size: 10px;
+            font-weight: 800;
+        }
+        
+        .raid-slot .remove-hint {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background: rgba(5, 6, 7, 0.78);
+            color: #ff8a7f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            font-size: 16px;
+            font-weight: 900;
+            transition: opacity 0.16s ease;
+        }
+
+        .raid-slot.filled:hover .remove-hint { opacity: 1; }
+
+        .raid-role-summary {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            gap: 7px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(var(--accent-rgb), 0.18);
+            background: var(--black-marble);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .raid-role-row {
+            min-height: 0;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 6px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #111416;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .raid-role-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .raid-role-label {
+            color: #f2ead8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .raid-role-count {
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+            flex: 0 0 auto;
+        }
+
+        .raid-role-icons {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 5px;
+            min-height: 28px;
+        }
+
+        .raid-role-icon {
+            width: 26px;
+            height: 26px;
+            flex: 0 0 26px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            background: #0b0d0e;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32);
+        }
+
+        .raid-role-icon .spec-fallback {
+            font-size: 9px;
+            font-weight: 900;
+            color: #fffaf0;
+        }
+
+        .raid-role-empty {
+            color: #6f777b;
+            font-size: 11px;
+            font-weight: 800;
+            align-self: center;
+        }
+
+        .spec-picker {
+            flex: 1 1 auto;
+            min-height: 0;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #34383b;
+            overflow-y: auto;
+            transition: opacity 0.2s;
+            background: var(--menu-marble);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .role-section { margin-bottom: 8px; }
+
+        .role-section:last-child { margin-bottom: 0; }
+        
+        .role-header { 
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            font-size: 12px; 
+            font-weight: 900; 
+            margin-bottom: 5px; 
+            color: var(--accent);
+            background: #101213;
+            padding: 0 8px;
+            border: 1px solid rgba(var(--accent-rgb), 0.16);
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .spec-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .spec-btn {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease, filter 0.16s ease, transform 0.16s ease;
+            font-size: 10px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.82);
+            text-align: center;
+            position: relative;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.36);
+        }
+
+        .spec-icon,
+        .slot-icon {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .spec-fallback {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .spec-btn::before {
+            display: none;
+        }
+
+        .spec-btn:hover {
+            z-index: 10;
+            border-color: #eef2f3;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .spec-picker.highlighting-active .spec-btn {
+            opacity: 0.38;
+            filter: saturate(0.55) brightness(0.75);
+        }
+
+        .spec-picker.highlighting-active .spec-btn.highlighted {
+            opacity: 1;
+            z-index: 20;
+            filter: saturate(1.28) brightness(1.16);
+            border-color: #fff6d8;
+            box-shadow:
+                0 0 0 2px rgba(255, 246, 216, 0.82),
+                0 0 18px 4px rgba(var(--accent-rgb), 0.56),
+                0 0 34px 8px rgba(var(--accent-rgb), 0.26),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.24);
+            transform: translateY(-1px);
+        }
+
+        .buff-dashboard {
+            position: relative;
+            z-index: 1;
+            padding: 68px 22px 22px;
+            border-radius: 0;
+            border: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            row-gap: 10px;
+            align-content: start;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .dashboard-column { display: contents; }
+
+        .dashboard-section { min-width: 0; }
+
+        .physical-buffs-section { grid-column: 1; grid-row: 1; }
+        .physical-debuffs-section { grid-column: 2; grid-row: 1; }
+        .caster-buffs-section { grid-column: 1; grid-row: 2; }
+        .magic-debuffs-section { grid-column: 2; grid-row: 2; }
+        .utility-buffs-section { grid-column: 1; grid-row: 3; }
+        .utility-debuffs-section { grid-column: 2; grid-row: 3; }
+
+        .dashboard-group-title {
+            --section-color: #d6a445;
+            --section-color-rgb: 214, 164, 69;
+            position: absolute;
+            top: 0;
+            right: 22px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 2;
+            pointer-events: none;
+            color: #f0e4c3;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.2);
+        }
+
+        .section-title {
+            --section-color: var(--accent);
+            --section-color-rgb: var(--accent-rgb);
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 9px;
+            padding: 0 11px 0 16px;
+            color: #f4f0e6;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(var(--section-color-rgb), 0.34);
+            border-radius: 7px;
+            background: #101213;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.22);
+            text-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.22);
+        }
+
+        .section-title::before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            border-radius: 999px;
+            background: var(--section-color);
+            box-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.32);
+        }
+
+        .section-title.physical-buff {
+            --section-color: #d16b54;
+            --section-color-rgb: 209, 107, 84;
+        }
+
+        .section-title.caster-buff {
+            --section-color: #6aa9d8;
+            --section-color-rgb: 106, 169, 216;
+        }
+
+        .section-title.utility-buff {
+            --section-color: #72b88f;
+            --section-color-rgb: 114, 184, 143;
+        }
+
+        .section-title.physical-debuff {
+            --section-color: #e06a5d;
+            --section-color-rgb: 224, 106, 93;
+            color: #ffe1dd;
+        }
+
+        .section-title.magic-debuff {
+            --section-color: #a984d6;
+            --section-color-rgb: 169, 132, 214;
+            color: #eadfff;
+        }
+
+        .section-title.utility-debuff {
+            --section-color: #d6a445;
+            --section-color-rgb: 214, 164, 69;
+            color: #f6e6c3;
+        }
+        
+        .buff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+            gap: 6px;
+        }
+
+        .buff-item {
+            min-height: 36px;
+            background: #151719;
+            color: var(--text-inactive);
+            padding: 6px 7px 6px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.16s ease, box-shadow 0.16s ease, color 0.16s ease, background 0.16s ease;
+            cursor: help;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+        }
+
+        .buff-item:hover {
+            color: var(--text);
+            border-color: rgba(var(--accent-rgb), 0.3);
+            background: #1d2123;
+        }
+
+        .buff-item.active {
+            background: #13201f;
+            color: var(--active-text);
+            border-color: rgba(var(--teal-rgb), 0.52);
+            box-shadow: inset 3px 0 0 var(--teal);
+        }
+
+        .buff-item.preview-active {
+            border-color: var(--preview-glow);
+            box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.28);
+            color: var(--text);
+        }
+
+        .buff-item.active.preview-active {
+            border-color: #eef2f3;
+            box-shadow: inset 3px 0 0 var(--teal), inset 0 0 0 1px rgba(var(--accent-rgb), 0.2);
+        }
+
+        .buff-item .status-icon {
+            width: 20px; 
+            height: 20px; 
+            border-radius: 50%; 
+            flex: 0 0 20px;
+            background: #0c0d0e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: #727b80;
+            border: 1px solid #4d5559;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .buff-item.active .status-icon { 
+            background: #12362f;
+            border-color: var(--teal);
+            box-shadow: none;
+            color: #eafff8;
+        }
+
+        #tooltip {
+            position: fixed;
+            background: #0d0f10;
+            border: 1px solid #686f73;
+            padding: 0;
+            border-radius: 7px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+            width: 300px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.48);
+            overflow: hidden;
+        }
+
+        #tooltip-header {
+            background: #171a1c;
+            padding: 9px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+        }
+
+        #tooltip-header h4 {
+            margin: 0;
+            color: #eef2f3;
+            font-size: 15px;
+            line-height: 1.15;
+        }
+
+        #tooltip-header span {
+            display: block;
+            margin-top: 3px;
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+
+        .tooltip-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+
+        .tooltip-section h5 {
+            margin: 0 0 4px 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+            padding-bottom: 3px;
+        }
+
+        .tooltip-list { margin: 0; padding-left: 18px; font-size: 11px; color: #ddd8ce; }
+        .tooltip-list li { margin-bottom: 1px; }
+        .tooltip-debuff { color: #ff9a90; }
+        .tooltip-empty { color: #777f83; }
+        
+        .roster-controls {
+            min-height: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            border: 1px solid #34383b;
+            border-radius: 8px;
+            background: var(--menu-marble);
+            color: var(--muted);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .roster-controls strong,
+        .roster-controls span {
+            color: var(--text);
+        }
+
+        .roster-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            min-height: 28px;
+            border: 1px solid #555d61;
+            border-radius: 7px;
+            padding: 0 10px;
+            color: var(--text);
+            background: #202326;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .btn:hover {
+            border-color: #c8d0d2;
+        }
+
+        .btn-clear {
+            border-color: rgba(var(--red-rgb), 0.58);
+            background: #2b1b1b;
+        }
+
+        .btn-clear:hover {
+            border-color: #ff8a7f;
+            box-shadow: 0 0 0 2px rgba(var(--red-rgb), 0.12);
+        }
+
+        .btn-size {
+            color: #f0f3f3;
+            border-color: rgba(var(--accent-rgb), 0.32);
+        }
+
+        .btn-size:hover {
+            border-color: #eef2f3;
+        }
+
+        .spec-btn[data-class="BARBARIAN"] { background: var(--class-barbarian); }
+        .spec-btn[data-class="WITCHDOCTOR"] { background: var(--class-witchdoctor); }
+        .spec-btn[data-class="FELSWORN"] { background: var(--class-felsworn); }
+        .spec-btn[data-class="WITCHHUNTER"] { background: var(--class-witchhunter); }
+        .spec-btn[data-class="STORMBRINGER"] { background: var(--class-stormbringer); }
+        .spec-btn[data-class="CULTIST"] { background: var(--class-cultist); }
+        .spec-btn[data-class="KNIGHTXOROTH"] { background: var(--class-knightofxoroth); }
+        .spec-btn[data-class="GUARDIAN"] { background: var(--class-guardian); }
+        .spec-btn[data-class="STARCALLER"] { background: var(--class-starcaller); }
+        .spec-btn[data-class="SUNCLERIC"] { background: var(--class-suncleric); }
+        .spec-btn[data-class="TEMPLAR"] { background: var(--class-templar); }
+        .spec-btn[data-class="PRIMALIST"] { background: var(--class-primalist); }
+        .spec-btn[data-class="BLOODMAGE"] { background: var(--class-bloodmage); }
+        .spec-btn[data-class="PYROMANCER"] { background: var(--class-pyromancer); }
+        .spec-btn[data-class="RUNEMASTER"] { background: var(--class-runemaster); }
+        .spec-btn[data-class="RANGER"] { background: var(--class-ranger); }
+        .spec-btn[data-class="REAPER"] { background: var(--class-reaper); }
+        .spec-btn[data-class="CHRONOMANCER"] { background: var(--class-chronomancer); }
+        .spec-btn[data-class="NECROMANCER"] { background: var(--class-necromancer); }
+        .spec-btn[data-class="VENOMANCER"] { background: var(--class-venomancer); }
+        .spec-btn[data-class="TINKER"] { background: var(--class-tinker); }
+
+        @media (max-width: 1180px) {
+            body {
+                min-width: 0;
+            }
+
+            .app-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .class-rail {
+                max-height: none;
+                overflow: visible;
+                border-right: 0;
+                border-bottom: 1px solid #34383b;
+            }
+
+            .spec-picker {
+                max-height: none;
+            }
+
+            .buff-dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-section {
+                grid-column: auto;
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 620px) {
+            h1 {
+                font-size: 18px;
+            }
+
+            .raid-roster {
+                gap: 5px;
+                padding: 8px;
+            }
+
+            .raid-group-slots {
+                grid-template-columns: repeat(5, 54px);
+                gap: 5px;
+            }
+
+            .raid-composition {
+                grid-template-columns: 1fr;
+            }
+
+            .spec-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .buff-dashboard {
+                padding: 14px;
+            }
+
+            .buff-grid {
+                grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+            }
+        }
