@@ -265,6 +265,9 @@
         }
 
         .raid-slot {
+            --role-outline-start: rgba(244, 211, 129, 0.9);
+            --role-outline-end: rgba(156, 112, 38, 0.88);
+            --role-outline-glow: rgba(244, 211, 129, 0.2);
             aspect-ratio: 1;
             background-color: var(--slot-bg);
             border: 1px solid var(--slot-border);
@@ -284,6 +287,30 @@
             cursor: grab;
         }
 
+        .raid-slot.role-tank {
+            --role-outline-start: rgba(91, 188, 255, 0.95);
+            --role-outline-end: rgba(36, 104, 255, 0.9);
+            --role-outline-glow: rgba(76, 159, 255, 0.28);
+        }
+
+        .raid-slot.role-healer {
+            --role-outline-start: rgba(89, 231, 142, 0.95);
+            --role-outline-end: rgba(22, 142, 83, 0.9);
+            --role-outline-glow: rgba(72, 214, 129, 0.26);
+        }
+
+        .raid-slot.role-support {
+            --role-outline-start: rgba(255, 220, 99, 0.96);
+            --role-outline-end: rgba(219, 132, 35, 0.92);
+            --role-outline-glow: rgba(255, 188, 58, 0.28);
+        }
+
+        .raid-slot.role-dps {
+            --role-outline-start: rgba(255, 103, 91, 0.96);
+            --role-outline-end: rgba(176, 35, 35, 0.92);
+            --role-outline-glow: rgba(234, 62, 52, 0.28);
+        }
+
         .raid-slot.filled:active {
             cursor: grabbing;
         }
@@ -300,6 +327,21 @@
 
         .raid-slot::before {
             display: none;
+        }
+
+        .raid-slot.filled::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 4;
+            pointer-events: none;
+            border-radius: 6px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--role-outline-start), var(--role-outline-end));
+            box-shadow: 0 0 12px var(--role-outline-glow);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
 
         .raid-slot:hover {
@@ -1433,7 +1475,7 @@ function renderRoster() {
 
             const slot = roster[index];
             const div = document.createElement('div');
-            div.className = `raid-slot ${slot ? 'filled' : ''}`;
+            div.className = `raid-slot ${slot ? `filled ${getRosterRoleClass(slot.role)}` : ''}`;
             div.dataset.index = index;
             div.draggable = !!slot;
             div.onclick = () => {
@@ -1488,6 +1530,13 @@ function renderRoster() {
     }
 
     renderRoleSummary();
+}
+
+function getRosterRoleClass(role) {
+    if (role === "TANK") return "role-tank";
+    if (role === "HEALER") return "role-healer";
+    if (role === "SUPPORT") return "role-support";
+    return "role-dps";
 }
 
 function renderRoleSummary() {
