@@ -309,7 +309,7 @@ export const SPEC_ICON_FILENAMES = {
     },
     CULTIST: {
         HERETIC: "Yogg-SaronIcon",
-        DREADNOUGHT: "YshaarjIcon",
+        DREADNOUGHT: "custom_T_Nhance_RPG_Icons_ShadowGuard_Border",
         CORRUPTION: "CThunIcon",
         GODBLADE: "NZothIcon"
     },
