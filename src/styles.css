@@ -287,24 +287,32 @@
             --role-outline-start: rgba(91, 188, 255, 0.95);
             --role-outline-end: rgba(36, 104, 255, 0.9);
             --role-outline-glow: rgba(76, 159, 255, 0.28);
+            --role-title-color: #5bbcff;
+            --role-title-rgb: 91, 188, 255;
         }
 
         .role-healer {
             --role-outline-start: rgba(89, 231, 142, 0.95);
             --role-outline-end: rgba(22, 142, 83, 0.9);
             --role-outline-glow: rgba(72, 214, 129, 0.26);
+            --role-title-color: #59e78e;
+            --role-title-rgb: 89, 231, 142;
         }
 
         .role-support {
             --role-outline-start: rgba(255, 220, 99, 0.96);
             --role-outline-end: rgba(219, 132, 35, 0.92);
             --role-outline-glow: rgba(255, 188, 58, 0.28);
+            --role-title-color: #ffdc63;
+            --role-title-rgb: 255, 220, 99;
         }
 
         .role-dps {
             --role-outline-start: rgba(255, 103, 91, 0.96);
             --role-outline-end: rgba(176, 35, 35, 0.92);
             --role-outline-glow: rgba(234, 62, 52, 0.28);
+            --role-title-color: #ff675b;
+            --role-title-rgb: 255, 103, 91;
         }
 
         .raid-slot.filled:active {
@@ -428,22 +436,45 @@
         }
 
         .raid-role-header {
+            min-height: 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 10px;
             min-width: 0;
+            position: relative;
+            z-index: 3;
+            padding: 0 9px 0 14px;
+            border-radius: 6px;
+            border: 1px solid rgba(var(--role-title-rgb), 0.34);
+            background:
+                linear-gradient(90deg, rgba(var(--role-title-rgb), 0.16), rgba(var(--role-title-rgb), 0.05) 62%, rgba(16, 18, 19, 0.94)),
+                #101213;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 10px rgba(var(--role-title-rgb), 0.1);
+            text-shadow: 0 0 12px rgba(var(--role-title-rgb), 0.22);
+        }
+
+        .raid-role-header::before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 7px;
+            bottom: 7px;
+            width: 3px;
+            border-radius: 999px;
+            background: var(--role-title-color);
+            box-shadow: 0 0 12px rgba(var(--role-title-rgb), 0.38);
         }
 
         .raid-role-label {
-            color: #f2ead8;
+            color: #f4f0e6;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
         }
 
         .raid-role-count {
-            color: var(--accent);
+            color: var(--role-title-color);
             font-variant-numeric: tabular-nums;
             flex: 0 0 auto;
         }
