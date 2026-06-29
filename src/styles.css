@@ -357,9 +357,7 @@
             pointer-events: none;
             border-radius: 6px;
             padding: 3px;
-            background:
-                linear-gradient(135deg, var(--role-outline-start), rgba(255, 255, 255, 0.82) 48%, var(--role-outline-end)),
-                linear-gradient(315deg, var(--role-outline-end), var(--role-outline-start));
+            background: var(--role-title-color);
             box-shadow:
                 0 0 18px var(--role-outline-glow),
                 inset 0 0 10px rgba(255, 255, 255, 0.16);
@@ -387,13 +385,6 @@
                 0 0 22px var(--role-outline-glow),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.13),
                 inset 0 0 18px rgba(0, 0, 0, 0.36);
-        }
-
-        .raid-slot.filled:hover::after {
-            padding: 4px;
-            box-shadow:
-                0 0 24px var(--role-outline-glow),
-                inset 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
         .raid-slot .spec-initials {
