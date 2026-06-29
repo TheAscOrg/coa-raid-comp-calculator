@@ -308,10 +308,10 @@ export const SPEC_ICON_FILENAMES = {
         WIND: "ability_skyreach_four_wind"
     },
     CULTIST: {
-        HERETIC: "_D3energyarmor",
-        DREADNOUGHT: "custom_T_Nhance_RPG_Icons_ShadowGuard_Border",
-        CORRUPTION: "uico_shadow_spell_01_Border",
-        GODBLADE: "nhi_arcanearrow_Border"
+        HERETIC: "Yogg-SaronIcon",
+        DREADNOUGHT: "YshaarjIcon",
+        CORRUPTION: "CThunIcon",
+        GODBLADE: "NZothIcon"
     },
     KNIGHTXOROTH: {
         HELLFIRE: "ability_paladin_bladeofjustice",
