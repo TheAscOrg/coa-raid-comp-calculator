@@ -349,7 +349,7 @@ export const SPEC_ICON_FILENAMES = {
     BLOODMAGE: {
         SANGUINE: "epic_rpg_icon_pack_blood_0003s_0000_hand_Border",
         FLESHWEAVER: "inv_misc_food_legion_gooamber_pool",
-        ACCURSED: "nhi_foreshadowblood_Border",
+        ACCURSED: "artifactability_feraldruid_ashamanesbite",
         ETERNAL: "ability_racial_viciousness"
     },
     PYROMANCER: {
