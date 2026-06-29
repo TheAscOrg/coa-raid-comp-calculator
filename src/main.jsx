@@ -391,7 +391,7 @@ function RoleSummary({ grouped }) {
   return (
     <div className="raid-role-summary" aria-label="Role targets">
       {RAID_ROLE_TARGETS.map((item) => (
-        <div className="raid-role-row" key={item.key}>
+        <div className={`raid-role-row ${getRosterRoleClass(item.key)}`} key={item.key}>
           <div className="raid-role-header">
             <span className="raid-role-label">{item.label}</span>
             <span className="raid-role-count">{grouped[item.key].length || ""}</span>

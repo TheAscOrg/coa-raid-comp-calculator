@@ -283,25 +283,25 @@
             cursor: grab;
         }
 
-        .raid-slot.role-tank {
+        .role-tank {
             --role-outline-start: rgba(91, 188, 255, 0.95);
             --role-outline-end: rgba(36, 104, 255, 0.9);
             --role-outline-glow: rgba(76, 159, 255, 0.28);
         }
 
-        .raid-slot.role-healer {
+        .role-healer {
             --role-outline-start: rgba(89, 231, 142, 0.95);
             --role-outline-end: rgba(22, 142, 83, 0.9);
             --role-outline-glow: rgba(72, 214, 129, 0.26);
         }
 
-        .raid-slot.role-support {
+        .role-support {
             --role-outline-start: rgba(255, 220, 99, 0.96);
             --role-outline-end: rgba(219, 132, 35, 0.92);
             --role-outline-glow: rgba(255, 188, 58, 0.28);
         }
 
-        .raid-slot.role-dps {
+        .role-dps {
             --role-outline-start: rgba(255, 103, 91, 0.96);
             --role-outline-end: rgba(176, 35, 35, 0.92);
             --role-outline-glow: rgba(234, 62, 52, 0.28);
@@ -407,6 +407,24 @@
             color: var(--text);
             font-size: 12px;
             font-weight: 900;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 0, 0, 0.16);
+        }
+
+        .raid-role-row::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            pointer-events: none;
+            border-radius: 6px;
+            padding: 1px;
+            background: linear-gradient(135deg, var(--role-outline-start), var(--role-outline-end));
+            box-shadow: 0 0 12px var(--role-outline-glow);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
         }
 
         .raid-role-header {
