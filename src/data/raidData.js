@@ -314,9 +314,9 @@ export const SPEC_ICON_FILENAMES = {
         GODBLADE: "NZothIcon"
     },
     KNIGHTXOROTH: {
-        HELLFIRE: "5_sumimparmy_Border",
-        DEFIANCE: "Ability_Warlock_ImprovedDemonicTactics",
-        WAR: "warrior_skullbanner"
+        HELLFIRE: "ability_paladin_bladeofjustice",
+        DEFIANCE: "spell_warlock_soulburn_haunt",
+        WAR: "ability_warlock_baneofhavoc"
     },
     GUARDIAN: {
         VANGUARD: "_Human_06",
