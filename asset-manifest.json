@@ -1,5 +1,5 @@
 ﻿{
-    "generatedAt":  "2026-06-29T17:50:13.6604940Z",
+    "generatedAt":  "2026-06-29T18:01:55.4199927Z",
     "classCopied":  [
                         "barbarian",
                         "witchdoctor",
@@ -626,6 +626,81 @@
                       "slug":  "item_holyspark",
                       "source":  "local",
                       "file":  "assets/icons/item_holyspark.png"
+                  },
+                  {
+                      "slug":  "inv_plate_mechagnome_c_01shoulder",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_plate_mechagnome_c_01shoulder.png"
+                  },
+                  {
+                      "slug":  "inv_engineering_815_uberspanner",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_engineering_815_uberspanner.png"
+                  },
+                  {
+                      "slug":  "inv_eng_bombfire",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_eng_bombfire.png"
+                  },
+                  {
+                      "slug":  "weaverform",
+                      "source":  "local",
+                      "file":  "assets/icons/weaverform.png"
+                  },
+                  {
+                      "slug":  "_d3corpsespiders",
+                      "source":  "local",
+                      "file":  "assets/icons/_d3corpsespiders.png"
+                  },
+                  {
+                      "slug":  "achievement_boss_eldernadox",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_boss_eldernadox.png"
+                  },
+                  {
+                      "slug":  "nhi_ghosthand_border",
+                      "source":  "local",
+                      "file":  "assets/icons/nhi_ghosthand_border.png"
+                  },
+                  {
+                      "slug":  "nhi_souldarkening_border",
+                      "source":  "local",
+                      "file":  "assets/icons/nhi_souldarkening_border.png"
+                  },
+                  {
+                      "slug":  "ability_revendreth_deathknight",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_revendreth_deathknight.png"
+                  },
+                  {
+                      "slug":  "spell_holy_devotion",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_holy_devotion.png"
+                  },
+                  {
+                      "slug":  "ability_druid_ripandtear",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_druid_ripandtear.png"
+                  },
+                  {
+                      "slug":  "inv_custom_hearthstone_fire",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_custom_hearthstone_fire.png"
+                  },
+                  {
+                      "slug":  "ui_darkshore_warfront_alliance_keeper_of_the_grove",
+                      "source":  "local",
+                      "file":  "assets/icons/ui_darkshore_warfront_alliance_keeper_of_the_grove.png"
+                  },
+                  {
+                      "slug":  "trade_archaeology_zinrokh_sword",
+                      "source":  "local",
+                      "file":  "assets/icons/trade_archaeology_zinrokh_sword.png"
+                  },
+                  {
+                      "slug":  "novart_magicspell_(14)_border",
+                      "source":  "local",
+                      "file":  "assets/icons/novart_magicspell_(14)_border.png"
                   }
               ]
 }
