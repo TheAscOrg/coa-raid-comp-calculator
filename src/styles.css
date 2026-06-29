@@ -287,7 +287,6 @@
             --role-outline-start: rgba(91, 188, 255, 0.95);
             --role-outline-end: rgba(36, 104, 255, 0.9);
             --role-outline-glow: rgba(76, 159, 255, 0.28);
-            --role-frame-color: #1d6aaa;
             --role-title-color: #5bbcff;
             --role-title-rgb: 91, 188, 255;
         }
@@ -296,7 +295,6 @@
             --role-outline-start: rgba(89, 231, 142, 0.95);
             --role-outline-end: rgba(22, 142, 83, 0.9);
             --role-outline-glow: rgba(72, 214, 129, 0.26);
-            --role-frame-color: #1e854e;
             --role-title-color: #59e78e;
             --role-title-rgb: 89, 231, 142;
         }
@@ -305,7 +303,6 @@
             --role-outline-start: rgba(255, 220, 99, 0.96);
             --role-outline-end: rgba(219, 132, 35, 0.92);
             --role-outline-glow: rgba(255, 188, 58, 0.28);
-            --role-frame-color: #b7741f;
             --role-title-color: #ffdc63;
             --role-title-rgb: 255, 220, 99;
         }
@@ -314,7 +311,6 @@
             --role-outline-start: rgba(255, 103, 91, 0.96);
             --role-outline-end: rgba(176, 35, 35, 0.92);
             --role-outline-glow: rgba(234, 62, 52, 0.28);
-            --role-frame-color: #a32d2d;
             --role-title-color: #ff675b;
             --role-title-rgb: 255, 103, 91;
         }
@@ -344,7 +340,7 @@
             z-index: 2;
             display: block;
             pointer-events: none;
-            border-radius: 3px;
+            border-radius: 4px;
             background:
                 linear-gradient(145deg, rgba(255, 255, 255, 0.16), transparent 34%),
                 radial-gradient(circle at 50% 100%, var(--role-outline-glow), transparent 68%);
@@ -360,11 +356,13 @@
             z-index: 4;
             pointer-events: none;
             border-radius: 6px;
-            padding: 5px;
-            background: var(--role-frame-color);
+            padding: 3px;
+            background:
+                linear-gradient(135deg, var(--role-outline-start), rgba(255, 255, 255, 0.82) 48%, var(--role-outline-end)),
+                linear-gradient(315deg, var(--role-outline-end), var(--role-outline-start));
             box-shadow:
-                0 0 20px var(--role-outline-glow),
-                inset 0 0 12px rgba(255, 255, 255, 0.18);
+                0 0 18px var(--role-outline-glow),
+                inset 0 0 10px rgba(255, 255, 255, 0.16);
             -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
@@ -389,6 +387,13 @@
                 0 0 22px var(--role-outline-glow),
                 inset 0 0 0 1px rgba(255, 255, 255, 0.13),
                 inset 0 0 18px rgba(0, 0, 0, 0.36);
+        }
+
+        .raid-slot.filled:hover::after {
+            padding: 4px;
+            box-shadow:
+                0 0 24px var(--role-outline-glow),
+                inset 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
         .raid-slot .spec-initials {
@@ -470,18 +475,18 @@
         }
 
         .raid-role-label {
-            color: var(--role-title-color);
+            color: #f4f0e6;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            text-shadow: 0 0 14px rgba(var(--role-title-rgb), 0.42);
+            text-shadow: 0 0 12px rgba(var(--role-title-rgb), 0.22);
         }
 
         .raid-role-count {
-            color: var(--role-title-color);
+            color: var(--accent);
             font-variant-numeric: tabular-nums;
             flex: 0 0 auto;
-            text-shadow: 0 0 14px rgba(var(--role-title-rgb), 0.4);
+            text-shadow: 0 0 12px rgba(var(--accent-rgb), 0.24);
         }
 
         .raid-role-icons {
@@ -669,7 +674,7 @@
             position: relative;
             margin-bottom: 9px;
             padding: 0 11px;
-            color: var(--section-color);
+            color: #f4f0e6;
             font-size: 13px;
             font-weight: 900;
             text-transform: uppercase;
@@ -678,7 +683,7 @@
             border-radius: 7px;
             background: #101213;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.22);
-            text-shadow: 0 0 15px rgba(var(--section-color-rgb), 0.46);
+            text-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.22);
         }
 
         .section-title.physical-buff {
@@ -699,16 +704,19 @@
         .section-title.physical-debuff {
             --section-color: #e06a5d;
             --section-color-rgb: 224, 106, 93;
+            color: #ffe1dd;
         }
 
         .section-title.magic-debuff {
             --section-color: #a984d6;
             --section-color-rgb: 169, 132, 214;
+            color: #eadfff;
         }
 
         .section-title.utility-debuff {
             --section-color: #d6a445;
             --section-color-rgb: 214, 164, 69;
+            color: #f6e6c3;
         }
         
         .buff-grid {
