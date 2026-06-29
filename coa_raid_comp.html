@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CoA Raid Comp Calculator (Buff Counters)</title>
+    <style>
+        :root {
+            --bg: #0a0b0c;
+            --panel: #151719;
+            --panel-2: #202326;
+            --line: #5c6367;
+            --line-on: #c6d1d2;
+            --text: #eef1f2;
+            --muted: #aeb6b9;
+            --accent: #c8d0d2;
+            --accent-rgb: 200, 208, 210;
+            --teal: #57b9a8;
+            --teal-rgb: 87, 185, 168;
+            --red: #b74b42;
+            --red-rgb: 183, 75, 66;
+            --inactive: #363b3e;
+            --slot-bg: #0d0f10;
+            --slot-border: #565e62;
+            --active-green: #58df9a;
+            --active-text: #f6f1e8;
+            --text-inactive: #858b8e;
+            --preview-glow: #e4eaec;
+            --marble: #101214;
+            --menu-marble: #1b1e20;
+            --black-marble: #070808;
+            font-family: "Segoe UI", Arial, sans-serif;
+
+            --class-barbarian: #C79C6E;
+            --class-witchdoctor: #0070DE;
+            --class-felsworn: #A330C9;
+            --class-witchhunter: #ABD473;
+            --class-stormbringer: #00FF96;
+            --class-cultist: #9482C9;
+            --class-knightofxoroth: #C41F3B;
+            --class-knightxoroth: #C41F3B;
+            --class-guardian: #FFF569;
+            --class-starcaller: #40C7EB;
+            --class-suncleric: #F58CBA;
+            --class-templar: #F0E68C;
+            --class-primalist: #FF7D0A;
+            --class-bloodmage: #880000;
+            --class-pyromancer: #69CCF0;
+            --class-runemaster: #FF00FF;
+            --class-ranger: #ABD473;
+            --class-reaper: #8787ED;
+            --class-chronomancer: #FFB81C;
+            --class-necromancer: #3FC7EB;
+            --class-venomancer: #00FF96;
+            --class-tinker: #A9D271;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        * {
+            scrollbar-color: #6a7073 rgba(5, 6, 7, 0.5);
+            scrollbar-width: thin;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(5, 6, 7, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #535a5d;
+            border: 2px solid rgba(5, 6, 7, 0.72);
+            border-radius: 999px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6a7073;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            min-width: 1120px;
+            color: var(--text);
+            background: var(--marble);
+            background-attachment: fixed;
+        }
+
+        .app-shell {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 720px 1fr;
+        }
+
+        .class-rail {
+            min-width: 0;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            border-right: 1px solid #34383b;
+            background: var(--menu-marble);
+            padding: 8px 10px;
+        }
+
+        .rail-title {
+            color: var(--muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 6px;
+        }
+
+        .spec-rail-title {
+            margin-top: 6px;
+        }
+
+        .workspace {
+            min-width: 0;
+            display: grid;
+            grid-template-rows: auto 1fr;
+        }
+
+        .topbar {
+            display: grid;
+            grid-template-columns: minmax(260px, 1fr) auto;
+            align-items: center;
+            gap: 18px;
+            padding: 18px 22px 12px;
+            border-bottom: 1px solid #34383b;
+            background: var(--menu-marble);
+        }
+
+        .class-heading {
+            min-width: 0;
+            display: grid;
+            grid-template-columns: 52px minmax(0, 1fr);
+            align-items: center;
+            gap: 13px;
+        }
+
+        .class-heading > div {
+            min-width: 0;
+        }
+
+        .class-header-icon {
+            width: 48px;
+            height: 48px;
+            display: block;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            background-color: #0b0c0d;
+            background-image: url("./assets/icons/achievement_dungeon_coablackdragonflight.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.1), 0 0 18px rgba(var(--accent-rgb), 0.15);
+        }
+
+        .data-status {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .tree-stage {
+            position: relative;
+            min-height: 0;
+            overflow: hidden;
+            border: 1px solid rgba(var(--accent-rgb), 0.26);
+            background: var(--black-marble);
+            background-size: auto, auto, cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.035) inset, 0 16px 42px rgba(0, 0, 0, 0.38);
+        }
+
+        .tree-stage::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 48px;
+            z-index: 0;
+            pointer-events: none;
+            background: #151719;
+            border-bottom: 1px solid rgba(var(--accent-rgb), 0.16);
+            box-shadow: inset 0 1px 0 rgba(var(--accent-rgb), 0.11);
+        }
+
+        h1 {
+            margin: 0;
+            color: var(--accent);
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 0;
+            text-shadow: 0 0 14px rgba(var(--accent-rgb), 0.12);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: minmax(390px, 450px) minmax(660px, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 1680px;
+            align-items: start;
+        }
+
+        .left-col {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .raid-composition {
+            display: grid;
+            grid-template-columns: max-content minmax(138px, 1fr);
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .raid-roster {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(var(--accent-rgb), 0.2);
+            background: var(--black-marble);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .raid-group {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 4px;
+        }
+
+        .raid-group-label {
+            color: var(--accent);
+            font-size: 11px;
+            font-weight: 900;
+            line-height: 1;
+            text-transform: uppercase;
+            letter-spacing: 0;
+        }
+
+        .raid-group-slots {
+            display: grid;
+            grid-template-columns: repeat(5, 76px);
+            gap: 7px;
+        }
+
+        .raid-slot {
+            aspect-ratio: 1;
+            background-color: var(--slot-bg);
+            border: 1px solid var(--slot-border);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.16s ease, box-shadow 0.16s ease;
+            overflow: hidden;
+            user-select: none;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .raid-slot.filled {
+            cursor: grab;
+        }
+
+        .raid-slot.filled:active {
+            cursor: grabbing;
+        }
+
+        .raid-slot.dragging {
+            opacity: 0.55;
+            border-color: #f4d381;
+        }
+
+        .raid-slot.drop-target {
+            border-color: #f4d381;
+            box-shadow: 0 0 16px rgba(244, 211, 129, 0.26), inset 0 0 0 1px rgba(244, 211, 129, 0.18);
+        }
+
+        .raid-slot::before {
+            display: none;
+        }
+
+        .raid-slot:hover {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.12);
+        }
+
+        .raid-slot.filled {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.055);
+        }
+
+        .raid-slot .spec-initials {
+            z-index: 2;
+            color: #fffaf0;
+            font-size: 10px;
+            font-weight: 900;
+            line-height: 1.1;
+            text-align: center;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.78);
+        }
+
+        .raid-slot .placeholder-text {
+            z-index: 1;
+            color: #777f83;
+            font-size: 10px;
+            font-weight: 800;
+        }
+        
+        .raid-slot .remove-hint {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            background: rgba(5, 6, 7, 0.78);
+            color: #ff8a7f;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            font-size: 16px;
+            font-weight: 900;
+            transition: opacity 0.16s ease;
+        }
+
+        .raid-slot.filled:hover .remove-hint { opacity: 1; }
+
+        .raid-role-summary {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            gap: 7px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(var(--accent-rgb), 0.18);
+            background: var(--black-marble);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .raid-role-row {
+            min-height: 0;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 6px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: #111416;
+            color: var(--text);
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .raid-role-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .raid-role-label {
+            color: #f2ead8;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .raid-role-count {
+            color: var(--accent);
+            font-variant-numeric: tabular-nums;
+            flex: 0 0 auto;
+        }
+
+        .raid-role-icons {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            gap: 5px;
+            min-height: 28px;
+        }
+
+        .raid-role-icon {
+            width: 26px;
+            height: 26px;
+            flex: 0 0 26px;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            background: #0b0d0e;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.32);
+        }
+
+        .raid-role-icon .spec-fallback {
+            font-size: 9px;
+            font-weight: 900;
+            color: #fffaf0;
+        }
+
+        .raid-role-empty {
+            color: #6f777b;
+            font-size: 11px;
+            font-weight: 800;
+            align-self: center;
+        }
+
+        .spec-picker {
+            flex: 1 1 auto;
+            min-height: 0;
+            padding: 8px;
+            border-radius: 8px;
+            border: 1px solid #34383b;
+            overflow-y: auto;
+            transition: opacity 0.2s;
+            background: var(--menu-marble);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .role-section { margin-bottom: 8px; }
+
+        .role-section:last-child { margin-bottom: 0; }
+        
+        .role-header { 
+            min-height: 24px;
+            display: flex;
+            align-items: center;
+            font-size: 12px; 
+            font-weight: 900; 
+            margin-bottom: 5px; 
+            color: var(--accent);
+            background: #101213;
+            padding: 0 8px;
+            border: 1px solid rgba(var(--accent-rgb), 0.16);
+            border-radius: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .spec-list { display: flex; flex-wrap: wrap; gap: 6px; }
+
+        .spec-btn {
+            width: 48px;
+            height: 48px;
+            border: 1px solid rgba(255, 255, 255, 0.24);
+            border-radius: 7px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border-color 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease, filter 0.16s ease, transform 0.16s ease;
+            font-size: 10px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.82);
+            text-align: center;
+            position: relative;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.36);
+        }
+
+        .spec-icon,
+        .slot-icon {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            border-radius: inherit;
+            pointer-events: none;
+        }
+
+        .spec-fallback {
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .spec-btn::before {
+            display: none;
+        }
+
+        .spec-btn:hover {
+            z-index: 10;
+            border-color: #eef2f3;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .spec-picker.highlighting-active .spec-btn {
+            opacity: 0.38;
+            filter: saturate(0.55) brightness(0.75);
+        }
+
+        .spec-picker.highlighting-active .spec-btn.highlighted {
+            opacity: 1;
+            z-index: 20;
+            filter: saturate(1.28) brightness(1.16);
+            border-color: #fff6d8;
+            box-shadow:
+                0 0 0 2px rgba(255, 246, 216, 0.82),
+                0 0 18px 4px rgba(var(--accent-rgb), 0.56),
+                0 0 34px 8px rgba(var(--accent-rgb), 0.26),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.24);
+            transform: translateY(-1px);
+        }
+
+        .buff-dashboard {
+            position: relative;
+            z-index: 1;
+            padding: 68px 22px 22px;
+            border-radius: 0;
+            border: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            row-gap: 10px;
+            align-content: start;
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .dashboard-column { display: contents; }
+
+        .dashboard-section { min-width: 0; }
+
+        .physical-buffs-section { grid-column: 1; grid-row: 1; }
+        .physical-debuffs-section { grid-column: 2; grid-row: 1; }
+        .caster-buffs-section { grid-column: 1; grid-row: 2; }
+        .magic-debuffs-section { grid-column: 2; grid-row: 2; }
+        .utility-buffs-section { grid-column: 1; grid-row: 3; }
+        .utility-debuffs-section { grid-column: 2; grid-row: 3; }
+
+        .dashboard-group-title {
+            --section-color: #d6a445;
+            --section-color-rgb: 214, 164, 69;
+            position: absolute;
+            top: 0;
+            right: 22px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            z-index: 2;
+            pointer-events: none;
+            color: #f0e4c3;
+            font-size: 15px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.2);
+        }
+
+        .section-title {
+            --section-color: var(--accent);
+            --section-color-rgb: var(--accent-rgb);
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-bottom: 9px;
+            padding: 0 11px 0 16px;
+            color: #f4f0e6;
+            font-size: 13px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: 1px solid rgba(var(--section-color-rgb), 0.34);
+            border-radius: 7px;
+            background: #101213;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.22);
+            text-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.22);
+        }
+
+        .section-title::before {
+            content: "";
+            position: absolute;
+            left: 7px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            border-radius: 999px;
+            background: var(--section-color);
+            box-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.32);
+        }
+
+        .section-title.physical-buff {
+            --section-color: #d16b54;
+            --section-color-rgb: 209, 107, 84;
+        }
+
+        .section-title.caster-buff {
+            --section-color: #6aa9d8;
+            --section-color-rgb: 106, 169, 216;
+        }
+
+        .section-title.utility-buff {
+            --section-color: #72b88f;
+            --section-color-rgb: 114, 184, 143;
+        }
+
+        .section-title.physical-debuff {
+            --section-color: #e06a5d;
+            --section-color-rgb: 224, 106, 93;
+            color: #ffe1dd;
+        }
+
+        .section-title.magic-debuff {
+            --section-color: #a984d6;
+            --section-color-rgb: 169, 132, 214;
+            color: #eadfff;
+        }
+
+        .section-title.utility-debuff {
+            --section-color: #d6a445;
+            --section-color-rgb: 214, 164, 69;
+            color: #f6e6c3;
+        }
+        
+        .buff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+            gap: 6px;
+        }
+
+        .buff-item {
+            min-height: 36px;
+            background: #151719;
+            color: var(--text-inactive);
+            padding: 6px 7px 6px 10px;
+            border-radius: 7px;
+            font-size: 12px;
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: space-between;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: border-color 0.16s ease, box-shadow 0.16s ease, color 0.16s ease, background 0.16s ease;
+            cursor: help;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+        }
+
+        .buff-item:hover {
+            color: var(--text);
+            border-color: rgba(var(--accent-rgb), 0.3);
+            background: #1d2123;
+        }
+
+        .buff-item.active {
+            background: #13201f;
+            color: var(--active-text);
+            border-color: rgba(var(--teal-rgb), 0.52);
+            box-shadow: inset 3px 0 0 var(--teal);
+        }
+
+        .buff-item.preview-active {
+            border-color: var(--preview-glow);
+            box-shadow: inset 0 0 0 1px rgba(var(--accent-rgb), 0.28);
+            color: var(--text);
+        }
+
+        .buff-item.active.preview-active {
+            border-color: #eef2f3;
+            box-shadow: inset 3px 0 0 var(--teal), inset 0 0 0 1px rgba(var(--accent-rgb), 0.2);
+        }
+
+        .buff-item .status-icon {
+            width: 20px; 
+            height: 20px; 
+            border-radius: 50%; 
+            flex: 0 0 20px;
+            background: #0c0d0e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: #727b80;
+            border: 1px solid #4d5559;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+        
+        .buff-item.active .status-icon { 
+            background: #12362f;
+            border-color: var(--teal);
+            box-shadow: none;
+            color: #eafff8;
+        }
+
+        #tooltip {
+            position: fixed;
+            background: #0d0f10;
+            border: 1px solid #686f73;
+            padding: 0;
+            border-radius: 7px;
+            pointer-events: none;
+            display: none;
+            z-index: 1000;
+            width: 300px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.48);
+            overflow: hidden;
+        }
+
+        #tooltip-header {
+            background: #171a1c;
+            padding: 9px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+        }
+
+        #tooltip-header h4 {
+            margin: 0;
+            color: #eef2f3;
+            font-size: 15px;
+            line-height: 1.15;
+        }
+
+        #tooltip-header span {
+            display: block;
+            margin-top: 3px;
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 800;
+            letter-spacing: 0.04em;
+        }
+
+        .tooltip-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; }
+
+        .tooltip-section h5 {
+            margin: 0 0 4px 0;
+            color: var(--muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+            padding-bottom: 3px;
+        }
+
+        .tooltip-list { margin: 0; padding-left: 18px; font-size: 11px; color: #ddd8ce; }
+        .tooltip-list li { margin-bottom: 1px; }
+        .tooltip-debuff { color: #ff9a90; }
+        .tooltip-empty { color: #777f83; }
+        
+        .roster-controls {
+            min-height: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+            border: 1px solid #34383b;
+            border-radius: 8px;
+            background: var(--menu-marble);
+            color: var(--muted);
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.035);
+        }
+
+        .roster-controls strong,
+        .roster-controls span {
+            color: var(--text);
+        }
+
+        .roster-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            min-height: 28px;
+            border: 1px solid #555d61;
+            border-radius: 7px;
+            padding: 0 10px;
+            color: var(--text);
+            background: #202326;
+            cursor: pointer;
+            font: inherit;
+        }
+
+        .btn:hover {
+            border-color: #c8d0d2;
+        }
+
+        .btn-clear {
+            border-color: rgba(var(--red-rgb), 0.58);
+            background: #2b1b1b;
+        }
+
+        .btn-clear:hover {
+            border-color: #ff8a7f;
+            box-shadow: 0 0 0 2px rgba(var(--red-rgb), 0.12);
+        }
+
+        .btn-size {
+            color: #f0f3f3;
+            border-color: rgba(var(--accent-rgb), 0.32);
+        }
+
+        .btn-size:hover {
+            border-color: #eef2f3;
+        }
+
+        .spec-btn[data-class="BARBARIAN"] { background: var(--class-barbarian); }
+        .spec-btn[data-class="WITCHDOCTOR"] { background: var(--class-witchdoctor); }
+        .spec-btn[data-class="FELSWORN"] { background: var(--class-felsworn); }
+        .spec-btn[data-class="WITCHHUNTER"] { background: var(--class-witchhunter); }
+        .spec-btn[data-class="STORMBRINGER"] { background: var(--class-stormbringer); }
+        .spec-btn[data-class="CULTIST"] { background: var(--class-cultist); }
+        .spec-btn[data-class="KNIGHTXOROTH"] { background: var(--class-knightofxoroth); }
+        .spec-btn[data-class="GUARDIAN"] { background: var(--class-guardian); }
+        .spec-btn[data-class="STARCALLER"] { background: var(--class-starcaller); }
+        .spec-btn[data-class="SUNCLERIC"] { background: var(--class-suncleric); }
+        .spec-btn[data-class="TEMPLAR"] { background: var(--class-templar); }
+        .spec-btn[data-class="PRIMALIST"] { background: var(--class-primalist); }
+        .spec-btn[data-class="BLOODMAGE"] { background: var(--class-bloodmage); }
+        .spec-btn[data-class="PYROMANCER"] { background: var(--class-pyromancer); }
+        .spec-btn[data-class="RUNEMASTER"] { background: var(--class-runemaster); }
+        .spec-btn[data-class="RANGER"] { background: var(--class-ranger); }
+        .spec-btn[data-class="REAPER"] { background: var(--class-reaper); }
+        .spec-btn[data-class="CHRONOMANCER"] { background: var(--class-chronomancer); }
+        .spec-btn[data-class="NECROMANCER"] { background: var(--class-necromancer); }
+        .spec-btn[data-class="VENOMANCER"] { background: var(--class-venomancer); }
+        .spec-btn[data-class="TINKER"] { background: var(--class-tinker); }
+
+        @media (max-width: 1180px) {
+            body {
+                min-width: 0;
+            }
+
+            .app-shell {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .class-rail {
+                max-height: none;
+                overflow: visible;
+                border-right: 0;
+                border-bottom: 1px solid #34383b;
+            }
+
+            .spec-picker {
+                max-height: none;
+            }
+
+            .buff-dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-section {
+                grid-column: auto;
+                grid-row: auto;
+            }
+        }
+
+        @media (max-width: 620px) {
+            h1 {
+                font-size: 18px;
+            }
+
+            .raid-roster {
+                gap: 5px;
+                padding: 8px;
+            }
+
+            .raid-group-slots {
+                grid-template-columns: repeat(5, 54px);
+                gap: 5px;
+            }
+
+            .raid-composition {
+                grid-template-columns: 1fr;
+            }
+
+            .spec-btn {
+                width: 44px;
+                height: 44px;
+            }
+
+            .buff-dashboard {
+                padding: 14px;
+            }
+
+            .buff-grid {
+                grid-template-columns: repeat(auto-fill, minmax(138px, 1fr));
+            }
+        }
+
+    </style>
+    <!-- Player export: icon paths are rebased to ./assets and no remote icon fallback is used at runtime. -->
+</head>
+<body>
+
+    <main class="app-shell">
+        <aside class="class-rail" aria-label="Raid setup">
+            <div class="rail-title">Raid Roster</div>
+            <div class="roster-controls">
+                <div><strong>Roster:</strong> <span id="count">0</span>/<span id="capacity">25</span></div>
+                <div class="roster-actions">
+                    <button class="btn btn-size" id="rosterSizeButton" onclick="expandRoster()">25 Slots</button>
+                    <button class="btn btn-clear" onclick="clearRoster()">Clear All</button>
+                </div>
+            </div>
+
+            <div class="raid-composition">
+                <div class="raid-roster" id="raidRoster"></div>
+                <div class="raid-role-summary" id="raidRoleSummary" aria-label="Role targets"></div>
+            </div>
+            <div class="rail-title spec-rail-title">Specializations</div>
+            <div class="spec-picker" id="specPicker"></div>
+        </aside>
+
+        <section class="workspace">
+            <header class="topbar">
+                <div class="class-heading">
+                    <span class="class-header-icon" aria-hidden="true"></span>
+                    <div>
+                        <h1>CoA Raid Comp Calculator</h1>
+                        <div class="data-status" id="raidSizeStatus">15 Player Raid</div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="tree-stage" aria-label="Raid buffs">
+                <div class="buff-dashboard">
+                    <div class="dashboard-column">
+                        <div class="dashboard-section physical-buffs-section">
+                            <div class="section-title physical-buff">Physical Buffs</div>
+                            <div class="buff-grid" id="physicalBuffs"></div>
+                        </div>
+                        <div class="dashboard-section caster-buffs-section">
+                            <div class="section-title caster-buff">Caster Buffs</div>
+                            <div class="buff-grid" id="casterBuffs"></div>
+                        </div>
+                        <div class="dashboard-section utility-buffs-section">
+                            <div class="section-title utility-buff">Utility Buffs</div>
+                            <div class="buff-grid" id="utilityBuffs"></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-column">
+                        <div class="dashboard-section physical-debuffs-section">
+                            <div class="section-title physical-debuff">Physical Debuffs</div>
+                            <div class="buff-grid" id="physicalDebuffs"></div>
+                        </div>
+                        <div class="dashboard-section magic-debuffs-section">
+                            <div class="section-title magic-debuff">Magic Debuffs</div>
+                            <div class="buff-grid" id="magicDebuffs"></div>
+                        </div>
+                        <div class="dashboard-section utility-debuffs-section">
+                            <div class="section-title utility-debuff">Utility Debuffs</div>
+                            <div class="buff-grid" id="utilityDebuffs"></div>
+                        </div>
+                    </div>
+                    <div class="dashboard-group-title">Boss Debuffs</div>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <div id="tooltip">
+        <div id="tooltip-header"></div>
+        <div class="tooltip-body" id="tooltip-body"></div>
+    </div>
+
+<script>
+
+// --- DATABASE (Same as before) ---
+const DB = {
+    "BARBARIAN": {
+        classBuffs: ["Flat Strength", "Flat Agility", "AP Flat (Shout)", "Concentration (Berserker)"],
+        classResists: [],
+        specs: [
+            { name: "ANCESTRY", role: "SUPPORT", buffs: ["Armor (Devo)", "Heroism", "Resistance REDUCTION"], debuffs: [] },
+            { name: "BRUTALITY", role: "MELEE", buffs: ["Attack Power %"], debuffs: ["Phys Dmg Taken (4%)", "Bleed Dmg Taken (30%)", "% Armor Debuff"] },
+            { name: "HEADHUNTING", role: "CASTER", buffs: ["All Crit (3%)", "Attack Power %"], debuffs: ["Bleed Dmg Taken (30%)", "Healing Reduc (30-50%)"] }
+        ]
+    },
+    "WITCHDOCTOR": {
+        classBuffs: ["Small All Resist", "Flat Intellect", "Flat Spirit", "Mp5"],
+        classResists: [],
+        specs: [
+            { name: "SHADOWHUNTING", role: "CASTER", buffs: ["Melee/Range Haste (10%)", "Spell Haste (3%)", "Attack Power %"], debuffs: ["Resistance REDUCTION"] },
+            { name: "VOODOO", role: "CASTER", buffs: ["Spell Haste (3%)", "All Damage Done (3%)"], debuffs: ["Attack Speed (Slow)", "Resistance REDUCTION"] },
+            { name: "BREWING", role: "HEALER", buffs: ["Spell Haste (3%)", "Replenishment"], debuffs: ["Attack Power Reduction", "Resistance REDUCTION"] }
+        ]
+    },
+    "FELSWORN": {
+        classBuffs: ["Stats Flat + Armor (MotW)", "AP Flat (Shout)"],
+        classResists: ["Fire", "Shadow"],
+        specs: [
+            { name: "INFERNAL", role: "CASTER", buffs: ["All Crit (3%)", "Damage done debuff (5%)"], debuffs: ["Spell Hit (3%) DEBUFF", "Spell Dmg Taken (10%)"] },
+            { name: "TYRANT", role: "TANK", buffs: ["Melee/Range Haste (10%)", "All Damage Done (3%)", "Raid Wall (Divine Sac)"], debuffs: ["Phys Dmg Taken (4%)", "Attack Power Reduction", "Attack Speed (Slow)", "Damage done debuff (5%)"] },
+            { name: "SLAYING", role: "MELEE", buffs: ["Melee/Range Haste (10%)", "Armor (Devo)"], debuffs: ["Healing Reduc (30-50%)", "Cast Slow 30%", "% Armor Debuff", "Damage done debuff (5%)"] }
+        ]
+    },
+    "WITCHHUNTER": {
+        classBuffs: ["Stats Flat + Armor (MotW)", "AP Flat (Shout)", "Mp5"],
+        classResists: ["Shadow"],
+        specs: [
+            { name: "INQUISITION", role: "MELEE", buffs: ["Melee/Range Haste (10%)"], debuffs: ["Cast Slow 30%", "Damage done debuff (5%)"] },
+            { name: "HOUNDMASTER", role: "CASTER", buffs: ["Spell Haste (3%)", "Attack Power %"], debuffs: ["Cast Slow 30%"] },
+            { name: "BLACK KNIGHT", role: "TANK", buffs: ["Replenishment", "Raid Wall (Divine Sac)"], debuffs: ["Cast Slow 30%", "Attack Speed (Slow)"] },
+            { name: "BOLTSLINGER", role: "CASTER", buffs: ["All Crit (3%)"], debuffs: ["Healing Reduc (30-50%)", "Cast Slow 30%", "% Armor Debuff"] }
+        ]
+    },
+    "STORMBRINGER": {
+        classBuffs: ["Small All Resist", "Flat Intellect", "Mp5", "Concentration"],
+        classResists: ["Nature"],
+        specs: [
+            { name: "MAELSTROM", role: "CASTER", buffs: ["All Damage Done (3%)"], debuffs: ["Spell Dmg Taken (10%)", "Attack Speed (Slow)"] },
+            { name: "LIGHTNING", role: "CASTER", buffs: ["All Crit (3%)"], debuffs: ["Spell Crit Taken Debuff (3%)"] },
+            { name: "WIND", role: "SUPPORT", buffs: ["Armor (Devo)", "Heroism"], debuffs: [] }
+        ]
+    },
+    "CULTIST": {
+        classBuffs: ["Stats % (Kings)", "Flat Intellect", "Flat Spirit", "Dampen Magic"],
+        classResists: ["Shadow"],
+        specs: [
+            { name: "HERETIC", role: "HEALER", buffs: ["Dmg Reduct(-3%)", "Replenishment"], debuffs: [] },
+            { name: "DREADNOUGHT", role: "TANK", buffs: ["Attack Speed (Slow)", "Insect Swarm Hit (3%)"], debuffs: ["Attack Power Reduction"] },
+            { name: "CORRUPTION", role: "CASTER", buffs: ["Spell Power Flat", "Spell Haste (3%)"], debuffs: ["Spell Hit (3%) DEBUFF", "Insect Swarm Hit (3%)"] },
+            { name: "GODBLADE", role: "MELEE", buffs: ["Healing Reduc (30-50%)"], debuffs: ["Spell Dmg Taken (10%)", "Attack Power Reduction"] }
+        ]
+    },
+    "KNIGHTXOROTH": {
+        classBuffs: ["Stamina (Fort)", "Flat Strength", "Flat Intellect", "Cost Reduction (5%)"],
+        classResists: ["Fire", "Frost", "Shadow", "Arcane"],
+        specs: [
+            { name: "HELLFIRE", role: "MELEE", buffs: ["Attack Power %", "All Damage Done (3%)", "Spell Crit Taken Debuff (3%)"], debuffs: ["Cast Slow 30%"] },
+            { name: "WAR", role: "MELEE", buffs: ["All Crit (3%)"], debuffs: ["Phys Dmg Taken (4%)", "Healing Reduc (30-50%)", "% Armor Debuff"] },
+            { name: "DEFIANCE", role: "TANK", buffs: ["Attack Power Reduction", "Attack Speed (Slow)"], debuffs: ["Spell Dmg Taken (10%)", "% Armor Debuff"] }
+        ]
+    },
+    "GUARDIAN": {
+        classBuffs: ["Flat Strength"],
+        classResists: ["Nature"],
+        specs: [
+            { name: "VANGUARD", role: "TANK", buffs: ["Dmg Reduct(-3%)", "Attack Speed (Slow)"], debuffs: ["% Armor Debuff", "Attack Power Reduction"] },
+            { name: "GLADIATOR", role: "MELEE", buffs: ["Attack Power %"], debuffs: ["Phys Dmg Taken (4%)", "Healing Reduc (30-50%)", "% Armor Debuff"] },
+            { name: "INSPIRATION", role: "SUPPORT", buffs: ["Armor (Devo)", "Heroism", "Resistance REDUCTION"], debuffs: ["% Armor Debuff"] }
+        ]
+    },
+    "STARCALLER": {
+        classBuffs: ["Flat Intellect", "Burst Mana"],
+        classResists: ["Arcane"],
+        specs: [
+            { name: "MOON PRIEST", role: "HEALER", buffs: ["All Crit (3%)", "Resistance REDUCTION"], debuffs: [] },
+            { name: "WARDEN", role: "MELEE", buffs: ["All Crit (3%)", "Resistance REDUCTION"], debuffs: ["Healing Reduc (30-50%)"] },
+            { name: "SENTINEL", role: "CASTER", buffs: ["Melee/Range Haste (10%)", "Resistance REDUCTION"], debuffs: ["Spell Dmg Taken (10%)"] },
+            { name: "MOON GUARD", role: "TANK", buffs: ["Dmg Reduct(-3%)", "Resistance REDUCTION"], debuffs: ["Spell Dmg Taken (10%)", "Attack Speed (Slow)", "Insect Swarm Hit (3%)"] }
+        ]
+    },
+    "SUNCLERIC": {
+        classBuffs: ["Stats % (Kings)", "AP Flat (Shout)", "Spell Power Flat", "Mp5", "Cost Reduction (5%)"],
+        classResists: [],
+        specs: [
+            { name: "BLESSINGS", role: "HEALER", buffs: ["Spell Haste (3%)", "Resistance REDUCTION"], debuffs: [] },
+            { name: "VALKYRIE", role: "MELEE", buffs: ["All Damage Done (3%)", "Resistance REDUCTION"], debuffs: ["Attack Speed (Slow)"] },
+            { name: "PIETY", role: "CASTER", buffs: ["Replenishment", "Resistance REDUCTION"], debuffs: ["Spell Hit (3%) DEBUFF", "Insect Swarm Hit (3%)"] },
+            { name: "SERAPHIM", role: "TANK", buffs: ["6% Healing Taken", "Raid Wall (Divine Sac)"], debuffs: ["Attack Speed (Slow)", "Insect Swarm Hit (3%)", "Damage done debuff (5%)"] }
+        ]
+    },
+    "TEMPLAR": {
+        classBuffs: ["Stats % (Kings)", "Flat Agility"],
+        classResists: [],
+        specs: [
+            { name: "ZEALOT", role: "MELEE", buffs: ["Melee/Range Haste (10%)"], debuffs: ["% Armor Debuff"] },
+            { name: "CRUSADER", role: "MELEE", buffs: ["All Damage Done (3%)"], debuffs: ["Attack Power Reduction"] },
+            { name: "OATHKEEPER", role: "TANK", buffs: ["Attack Power %", "6% Healing Taken", "Raid Wall (Divine Sac)"], debuffs: ["Cast Slow 30%", "Insect Swarm Hit (3%)"] }
+        ]
+    },
+    "PRIMALIST": {
+        classBuffs: ["Stats Flat + Armor (MotW)", "Small All Resist", "Flat Agility", "Flat Spirit"],
+        classResists: ["Nature", "Arcane"],
+        specs: [
+            { name: "WILDWALKER", role: "MELEE", buffs: ["Attack Power %"], debuffs: ["Phys Dmg Taken (4%)", "Bleed Dmg Taken (30%)"] },
+            { name: "MOUNTAIN KING", role: "TANK", buffs: ["Replenishment", "Phys Dmg Taken (4%)"], debuffs: ["Attack Speed (Slow)", "Insect Swarm Hit (3%)"] },
+            { name: "GEOMANCY", role: "CASTER", buffs: ["Spell Haste (3%)", "Spell Hit (3%) DEBUFF"], debuffs: ["Spell Crit Taken Debuff (3%)", "Insect Swarm Hit (3%)"] },
+            { name: "GROVEKEEPER", role: "SUPPORT", buffs: ["6% Healing Taken", "Armor (Devo)", "Heroism"], debuffs: ["% Armor Debuff"] }
+        ]
+    },
+    "BLOODMAGE": {
+        classBuffs: ["Stamina (Fort)", "Concentration"],
+        classResists: [],
+        specs: [
+            { name: "SANGUINE", role: "CASTER", buffs: ["Spell Haste (3%)"], debuffs: ["Spell Crit Taken Debuff (3%)", "Bleed Dmg Taken (30%)", "Attack Speed (Slow)"] },
+            { name: "FLESHWEAVER", role: "SUPPORT", buffs: ["Armor (Devo)", "Heroism"], debuffs: ["Bleed Dmg Taken (30%)"] },
+            { name: "ACCURSED", role: "MELEE", buffs: ["Spell Haste (3%)", "All Crit (3%)"], debuffs: ["Bleed Dmg Taken (30%)", "Healing Reduc (30-50%)"] },
+            { name: "ETERNAL", role: "TANK", buffs: ["Attack Power %", "6% Healing Taken"], debuffs: ["Bleed Dmg Taken (30%)", "Attack Speed (Slow)", "Insect Swarm Hit (3%)"] }
+        ]
+    },
+    "PYROMANCER": {
+        classBuffs: ["Flat Intellect", "Flat Spirit", "Burst Mana"],
+        classResists: ["Fire", "Arcane"],
+        specs: [
+            { name: "FLAMEWEAVING", role: "HEALER", buffs: ["Replenishment"], debuffs: ["Healing Reduc (30-50%)"] },
+            { name: "DRACONIC", role: "CASTER", buffs: ["Spell Haste (3%)"], debuffs: ["Spell Hit (3%) DEBUFF", "Healing Reduc (30-50%)"] },
+            { name: "INCINERATION", role: "CASTER", buffs: ["All Crit (3%)", "Spell Crit Taken Debuff (3%)"], debuffs: ["Healing Reduc (30-50%)"] }
+        ]
+    },
+    "RANGER": {
+        classBuffs: ["Stats Flat + Armor (MotW)", "Flat Agility"],
+        classResists: ["Nature"],
+        specs: [
+            { name: "BRIGAND", role: "MELEE", buffs: ["Melee/Range Haste (10%)"], debuffs: ["Healing Reduc (30-50%)", "Insect Swarm Hit (3%)"] },
+            { name: "ARCHERY", role: "CASTER", buffs: ["Melee/Range Haste (10%)"], debuffs: ["Phys Dmg Taken (4%)", "Bleed Dmg Taken (30%)", "Insect Swarm Hit (3%)"] },
+            { name: "FARSTRIDER", role: "SUPPORT", buffs: ["Melee/Range Haste (10%)", "Armor (Devo)", "Heroism"], debuffs: ["Attack Power Reduction", "Insect Swarm Hit (3%)"] }
+        ]
+    },
+    "REAPER": {
+        classBuffs: ["Small All Resist", "Stamina (Fort)", "Flat Strength"],
+        classResists: [],
+        specs: [
+            { name: "SOUL", role: "MELEE", buffs: [], debuffs: ["Spell Dmg Taken (10%)", "Attack Speed (Slow)", "Insect Swarm Hit (3%)"] },
+            { name: "HARVEST", role: "MELEE", buffs: ["All Crit (3%)"], debuffs: ["Healing Reduc (30-50%)", "Attack Power Reduction", "Insect Swarm Hit (3%)"] },
+            { name: "DOMINATION", role: "TANK", buffs: ["All Crit (3%)", "Dmg Reduct(-3%)"], debuffs: ["Phys Dmg Taken (4%)", "Attack Speed (Slow)", "Insect Swarm Hit (3%)"] }
+        ]
+    },
+    "RUNEMASTER": {
+        classBuffs: ["Stats % (Kings)", "Flat Agility", "Cost Reduction (5%)", "Burst Mana", "Amplify Magic"],
+        classResists: ["Fire", "Nature", "Arcane"],
+        specs: [
+            { name: "GLYPHIC", role: "CASTER", buffs: ["Replenishment"], debuffs: ["Spell Dmg Taken (10%)", "Healing Reduc (30-50%)"] },
+            { name: "RIFTBLADE", role: "MELEE", buffs: ["All Damage Done (3%)", "Replenishment"], debuffs: ["Healing Reduc (30-50%)"] },
+            { name: "ENGRAVEMENT", role: "MELEE", buffs: ["Melee/Range Haste (10%)", "Replenishment"], debuffs: ["Healing Reduc (30-50%)", "Attack Power Reduction"] }
+        ]
+    },
+    "CHRONOMANCER": {
+        classBuffs: ["Flat Intellect", "Flat Spirit", "Burst Mana", "Amplify Magic", "Dampen Magic"],
+        classResists: [],
+        specs: [
+            { name: "TIME", role: "HEALER", buffs: ["Spell Haste (3%)", "Dmg Reduct(-3%)"], debuffs: [] },
+            { name: "INFINITE", role: "CASTER", buffs: ["All Damage Done (3%)"], debuffs: ["Spell Hit (3%) DEBUFF", "Spell Dmg Taken (10%)", "Cast Slow 30%"] },
+            { name: "ARTIFICER", role: "CASTER", buffs: ["All Crit (3%)", "Replenishment"], debuffs: ["Attack Speed (Slow)", "Insect Swarm Hit (3%)"] }
+        ]
+    },
+    "NECROMANCER": {
+        classBuffs: ["Stamina (Fort)", "Spell Power Flat"],
+        classResists: ["Fire"],
+        specs: [
+            { name: "ANIMATION", role: "CASTER", buffs: ["All Damage Done (3%)"], debuffs: ["Healing Reduc (30-50%)", "% Armor Debuff", "Attack Power Reduction", "Attack Speed (Slow)"] },
+            { name: "DEATH", role: "CASTER", buffs: ["Spell Haste (3%)"], debuffs: ["Spell Dmg Taken (10%)", "Healing Reduc (30-50%)", "% Armor Debuff", "Attack Power Reduction", "Attack Speed (Slow)"] },
+            { name: "RIME", role: "CASTER", buffs: ["All Crit (3%)", "Spell Crit Taken Debuff (3%)"], debuffs: ["Healing Reduc (30-50%)", "% Armor Debuff", "Attack Power Reduction", "Attack Speed (Slow)"] }
+        ]
+    },
+    "VENOMANCER": {
+        classBuffs: ["Stats Flat + Armor (MotW)", "Flat Agility", "Flat Spirit"],
+        classResists: ["Fire"],
+        specs: [
+            { name: "STALKING", role: "MELEE", buffs: ["Spell Crit Taken Debuff (3%)", "Cast Slow 30%"], debuffs: ["Spell Dmg Taken (10%)"] },
+            { name: "VIZIER", role: "HEALER", buffs: ["6% Healing Taken", "Replenishment"], debuffs: ["Cast Slow 30%"] },
+            { name: "FORTITUDE", role: "TANK", buffs: ["Dmg Reduct(-3%)"], debuffs: ["Cast Slow 30%", "Attack Speed (Slow)", "Insect Swarm Hit (3%)"] },
+            { name: "ROTWEAVER", role: "CASTER", buffs: ["Spell Haste (3%)"], debuffs: ["Spell Hit (3%) DEBUFF", "Healing Reduc (30-50%)", "Cast Slow 30%"] }
+        ]
+    },
+    "TINKER": {
+        classBuffs: ["AP Flat (Shout)", "Mp5", "Burst Mana", "Concentration", "Amplify Magic"],
+        classResists: [],
+        specs: [
+            { name: "DEMOLITION", role: "CASTER", buffs: ["Attack Power %"], debuffs: ["Attack Power Reduction"] },
+            { name: "MECHANICS", role: "CASTER", buffs: ["Melee/Range Haste (10%)"], debuffs: ["% Armor Debuff"] },
+            { name: "INVENTION", role: "HEALER", buffs: ["Spell Haste (3%)", "Dmg Reduct(-3%)", "6% Healing Taken"], debuffs: [] }
+        ]
+    }
+};
+
+const UI_CATEGORIES = {
+    physicalBuffs: ["Stats % (Kings)", "Stats Flat + Armor (MotW)", "Stamina (Fort)", "Flat Strength", "Flat Agility", "AP Flat (Shout)", "Attack Power %", "Melee/Range Haste (10%)"],
+    casterBuffs: ["Flat Intellect", "Flat Spirit", "Spell Power Flat", "Spell Haste (3%)", "Mp5", "Replenishment", "Burst Mana"],
+    utilityBuffs: ["All Crit (3%)", "All Damage Done (3%)", "Small All Resist", "Fire", "Frost", "Nature", "Shadow", "Arcane", "Cost Reduction (5%)", "Dmg Reduct(-3%)", "6% Healing Taken", "Concentration", "Amplify Magic", "Dampen Magic", "Armor (Devo)", "Raid Wall (Divine Sac)", "Heroism"],
+    physicalDebuffs: ["Phys Dmg Taken (4%)", "Bleed Dmg Taken (30%)", "% Armor Debuff"],
+    magicDebuffs: ["Spell Dmg Taken (10%)", "Spell Crit Taken Debuff (3%)", "Spell Hit (3%) DEBUFF", "Resistance REDUCTION"],
+    utilityDebuffs: ["Attack Power Reduction", "Attack Speed (Slow)", "Insect Swarm Hit (3%)", "Healing Reduc (30-50%)", "Cast Slow 30%", "Damage done debuff (5%)"]
+};
+
+const DISPLAY_NAMES = {
+    "Stats % (Kings)": "10% Stats",
+    "Stats Flat + Armor (MotW)": "Minor Armor and All Stats",
+    "Stamina (Fort)": "Stamina",
+    "Flat Strength": "Strength",
+    "Flat Agility": "Agility",
+    "Flat Intellect": "Intellect",
+    "Flat Spirit": "Spirit",
+    "AP Flat (Shout)": "Attack Power",
+    "Spell Power Flat": "Spell Power",
+    "Attack Power %": "5% Attack Power",
+    "Melee/Range Haste (10%)": "10% Melee & Range Haste",
+    "Spell Haste (3%)": "3% Spell Haste",
+    "All Crit (3%)": "3% Critical Strike (all)",
+    "All Damage Done (3%)": "3% Damage Done (all)",
+    "Small All Resist": "Small Resistances (all)",
+    "Mp5": "Mana Regeneration",
+    "Replenishment": "Replenishment",
+    "Burst Mana": "Strong Mana Cooldown",
+    "Cost Reduction (5%)": "5% Resource Reduction",
+    "Dmg Reduct(-3%)": "3% Damage Reduction (all)",
+    "6% Healing Taken": "6% Healing Done",
+    "Concentration": "Concentration",
+    "Amplify Magic": "Amplify Magic",
+    "Dampen Magic": "Dampen Magic",
+    "Armor (Devo)": "Armor",
+    "Raid Wall (Divine Sac)": "Defensive Cooldown (Raid-Wide)",
+    "Heroism": "Heroism | Bloodlust",
+    "Phys Dmg Taken (4%)": "4% Physical Damage",
+    "Spell Dmg Taken (10%)": "10% Spell Damage",
+    "Bleed Dmg Taken (30%)": "30% Bleed Damage",
+    "Spell Crit Taken Debuff (3%)": "3% Spell Critical Strike Chance",
+    "Spell Hit (3%) DEBUFF": "3% Spell Hit",
+    "Resistance REDUCTION": "Resistance Reduction",
+    "% Armor Debuff": "Armor Reduction",
+    "Attack Power Reduction": "Attack Power Reduction",
+    "Attack Speed (Slow)": "Attack Speed Slow",
+    "Insect Swarm Hit (3%)": "3% Hit Reduction",
+    "Healing Reduc (30-50%)": "Healing Reduction",
+    "Cast Slow 30%": "Cast Speed Slow",
+    "Damage done debuff (5%)": "Damage Done Reduction (5%)"
+};
+
+const BUFF_ALIASES = {
+    "Concentration (Berserker)": "Concentration"
+};
+
+const CLASS_ICON_FILES = {
+    BARBARIAN: "barbarian",
+    WITCHDOCTOR: "witchdoctor",
+    FELSWORN: "demonhunter",
+    WITCHHUNTER: "witchhunter",
+    STORMBRINGER: "stormbringer",
+    CULTIST: "cultist",
+    KNIGHTXOROTH: "fleshwarden",
+    GUARDIAN: "guardian",
+    STARCALLER: "starcaller",
+    SUNCLERIC: "suncleric",
+    TEMPLAR: "monk",
+    PRIMALIST: "prophet",
+    BLOODMAGE: "sonofarugal",
+    PYROMANCER: "pyromancer",
+    RUNEMASTER: "spiritmage",
+    RANGER: "ranger",
+    REAPER: "reaper",
+    CHRONOMANCER: "chronomancer",
+    NECROMANCER: "necromancer",
+    VENOMANCER: "wildwalker",
+    TINKER: "tinker"
+};
+
+const SPEC_ICON_FILENAMES = {
+    BARBARIAN: {
+        ANCESTRY: "spell_brew_wheat",
+        BRUTALITY: "_Orc_06",
+        HEADHUNTING: "inv_axe_2h_artifactmaw_d_01"
+    },
+    WITCHDOCTOR: {
+        SHADOWHUNTING: "ShadowHunter",
+        VOODOO: "trade_archaeology_troll_voodoodoll",
+        BREWING: "INV_Misc_Cauldron_Nature"
+    },
+    FELSWORN: {
+        INFERNAL: "_AuraCloak_Felfire",
+        TYRANT: "ability_demonhunter_demonictrample",
+        SLAYING: "inv_sword_1h_artifactfelomelorn_d_03dual"
+    },
+    WITCHHUNTER: {
+        INQUISITION: "Spell_Shadow_ShadowandFlame",
+        HOUNDMASTER: "custom_14_summon_dogs_Border",
+        "BLACK KNIGHT": "novart_physical_ability_(49)_Border",
+        BOLTSLINGER: "_d3preparation"
+    },
+    STORMBRINGER: {
+        MAELSTROM: "ability_shawaterelemental_reform",
+        LIGHTNING: "nhi_frozenlightning_Border",
+        WIND: "inv_progenitorelemental_black"
+    },
+    CULTIST: {
+        HERETIC: "Yogg-SaronIcon",
+        DREADNOUGHT: "YshaarjIcon",
+        CORRUPTION: "CThunIcon",
+        GODBLADE: "NZothIcon"
+    },
+    KNIGHTXOROTH: {
+        HELLFIRE: "5_sumimparmy_Border",
+        DEFIANCE: "Ability_Warlock_ImprovedDemonicTactics",
+        WAR: "warrior_skullbanner"
+    },
+    GUARDIAN: {
+        VANGUARD: "_Human_06",
+        GLADIATOR: "epic_rpg_icon_pack_brutal_icon_0001s_0000_warrior_Border",
+        INSPIRATION: "ACHIEVEMENT_GUILDPERK_EVERYONES_A_HERO"
+    },
+    STARCALLER: {
+        "MOON PRIEST": "custom_T_Nhance_RPG_Icons_MagicMoonBuff_Border",
+        WARDEN: "inv_pet_wardenowl",
+        SENTINEL: "_Diablo3_ArrowRain_Mage",
+        "MOON GUARD": "artifactability_balancedruid_newmoon"
+    },
+    SUNCLERIC: {
+        BLESSINGS: "item_holyspark",
+        VALKYRIE: "inv_valkiergoldpet",
+        PIETY: "custom_T_Nhance_RPG_Icons_HolyMeditation_Border",
+        SERAPHIM: "ability_paladin_conviction"
+    },
+    TEMPLAR: {
+        ZEALOT: "custom_Paladinskill_24_Border",
+        CRUSADER: "nhi_firesword_Border",
+        OATHKEEPER: "inv_staff_2h_nazmirraid_d_01"
+    },
+    PRIMALIST: {
+        WILDWALKER: "_BearAttack_BrownFire",
+        "MOUNTAIN KING": "inv_elementalearth2",
+        GEOMANCY: "item_earthenmight",
+        GROVEKEEPER: "Spell_Shaman_BlessingOfEternals"
+    },
+    BLOODMAGE: {
+        SANGUINE: "epic_rpg_icon_pack_blood_0003s_0000_hand_Border",
+        FLESHWEAVER: "inv_misc_food_legion_gooamber_pool",
+        ACCURSED: "nhi_foreshadowblood_Border",
+        ETERNAL: "ability_racial_viciousness"
+    },
+    PYROMANCER: {
+        FLAMEWEAVING: "custom_T_Phoenix_Border",
+        DRACONIC: "inv_misc_head_dragon_bronze",
+        INCINERATION: "nhi_corruptionfire_Border"
+    },
+    RANGER: {
+        BRIGAND: "ability_rogue_energeticrecovery",
+        ARCHERY: "inv_archaeology_70_tauren_stonewoodbow",
+        FARSTRIDER: "inv_legion_faction_dreamweavers"
+    },
+    REAPER: {
+        SOUL: "inv_artifact_thalkielsdiscord",
+        HARVEST: "ability_rogue_sealfate",
+        DOMINATION: "ability_touchofanimus"
+    },
+    RUNEMASTER: {
+        GLYPHIC: "_D3arcanetorrent",
+        RIFTBLADE: "INV_Weapon_Shortblade_79",
+        ENGRAVEMENT: "70_inscription_vantus_rune_azure"
+    },
+    CHRONOMANCER: {
+        TIME: "inv_trinket_80_kultiras02a",
+        INFINITE: "achievement_boss_infinitecorruptor",
+        ARTIFICER: "achievement_guildperk_workingovertime"
+    },
+    NECROMANCER: {
+        ANIMATION: "_Undead_03",
+        DEATH: "Spell_Shadow_PlagueCloud",
+        RIME: "WC3LichOriginal"
+    },
+    VENOMANCER: {
+        STALKING: "inv_pet_spiderdemon",
+        VIZIER: "rogue_paralytic_poison",
+        FORTITUDE: "inv_nerubianbeetlepet_green",
+        ROTWEAVER: "_LiquidStone_Poison"
+    },
+    TINKER: {
+        DEMOLITION: "INV_Musket_04",
+        MECHANICS: "INV_Misc_EngGizmos_06",
+        INVENTION: "INV_Gizmo_RocketBootExtreme"
+    }
+};
+
+const DISPLAY_ROLES = ["TANK", "HEALER", "SUPPORT", "MELEE", "CASTER"];
+const DISPLAY_ROLE_NAMES = {
+    "TANK": "Tank",
+    "HEALER": "Healer",
+    "SUPPORT": "Support",
+    "MELEE": "Melee",
+    "CASTER": "Ranged / Caster"
+};
+
+const RAID_ROLE_TARGETS = [
+    { key: "TANK", label: "Tanks", target: 2 },
+    { key: "HEALER", label: "Healer", target: 2 },
+    { key: "SUPPORT", label: "Support", target: 1 },
+    { key: "DPS", label: "DPS", target: 5 }
+];
+
+const DEFAULT_ROSTER_SIZE = 25;
+const MAX_ROSTER_SIZE = 25;
+
+// Application State
+let roster = Array(DEFAULT_ROSTER_SIZE).fill(null);
+let draggedRosterIndex = null;
+let suppressRosterClick = false;
+let pointerRosterDrag = null;
+
+function init() {
+    renderRoster();
+    renderPicker();
+    renderBuffDashboard();
+    updateDashboard();
+}
+
+function renderRoster() {
+    const el = document.getElementById('raidRoster');
+    el.innerHTML = '';
+
+    for (let groupIndex = 0; groupIndex < Math.ceil(roster.length / 5); groupIndex += 1) {
+        const group = document.createElement('div');
+        group.className = 'raid-group';
+
+        const label = document.createElement('div');
+        label.className = 'raid-group-label';
+        label.innerText = `Group ${groupIndex + 1}`;
+        group.appendChild(label);
+
+        const slots = document.createElement('div');
+        slots.className = 'raid-group-slots';
+
+        for (let offset = 0; offset < 5; offset += 1) {
+            const index = groupIndex * 5 + offset;
+            if (index >= roster.length) continue;
+
+            const slot = roster[index];
+            const div = document.createElement('div');
+            div.className = `raid-slot ${slot ? 'filled' : ''}`;
+            div.dataset.index = index;
+            div.draggable = !!slot;
+            div.onclick = () => {
+                if (suppressRosterClick) {
+                    suppressRosterClick = false;
+                    return;
+                }
+                removeSlot(index);
+            };
+            div.ondragstart = (e) => handleSlotDragStart(e, index);
+            div.ondragover = (e) => handleSlotDragOver(e, index);
+            div.ondragenter = (e) => handleSlotDragOver(e, index);
+            div.ondragleave = (e) => e.currentTarget.classList.remove('drop-target');
+            div.ondrop = (e) => handleSlotDrop(e, index);
+            div.ondragend = handleSlotDragEnd;
+            div.onmousedown = (e) => handleSlotPointerDown(e, index);
+            
+            if (slot) {
+                div.style.backgroundColor = getComputedStyle(document.body).getPropertyValue(`--class-${slot.class.toLowerCase()}`);
+                
+                div.appendChild(createSpecIcon(slot.class, slot.specName, 'slot-icon'));
+
+                const removeHint = document.createElement('div');
+                removeHint.className = 'remove-hint';
+                removeHint.innerText = 'X';
+                div.appendChild(removeHint);
+
+                div.onmouseenter = (e) => showTooltip(e, slot);
+                div.onmouseleave = hideTooltip;
+            } else {
+                const ph = document.createElement('div');
+                ph.className = 'placeholder-text';
+                ph.innerText = (index + 1);
+                div.appendChild(ph);
+            }
+            slots.appendChild(div);
+        }
+
+        group.appendChild(slots);
+        el.appendChild(group);
+    }
+
+    const count = roster.filter(x => x).length;
+    document.getElementById('count').innerText = count;
+    document.getElementById('capacity').innerText = roster.length;
+    document.getElementById('raidSizeStatus').innerText = `${roster.length} Player Raid`;
+
+    const sizeButton = document.getElementById('rosterSizeButton');
+    if (sizeButton) {
+        sizeButton.disabled = roster.length >= MAX_ROSTER_SIZE;
+        sizeButton.innerText = roster.length >= MAX_ROSTER_SIZE ? '25 Slots' : 'Expand to 25';
+    }
+
+    renderRoleSummary();
+}
+
+function renderRoleSummary() {
+    const el = document.getElementById('raidRoleSummary');
+    if (!el) return;
+
+    const counts = { TANK: 0, HEALER: 0, SUPPORT: 0, DPS: 0 };
+    const grouped = { TANK: [], HEALER: [], SUPPORT: [], DPS: [] };
+    roster.forEach(slot => {
+        if (!slot) return;
+        const roleKey = (slot.role === "MELEE" || slot.role === "CASTER") ? "DPS" : slot.role;
+        if (counts[roleKey] === undefined) return;
+        counts[roleKey] += 1;
+        grouped[roleKey].push(slot);
+    });
+
+    el.innerHTML = '';
+    RAID_ROLE_TARGETS.forEach(item => {
+        const row = document.createElement('div');
+        row.className = 'raid-role-row';
+
+        const header = document.createElement('div');
+        header.className = 'raid-role-header';
+
+        const label = document.createElement('span');
+        label.className = 'raid-role-label';
+        label.innerText = item.label;
+
+        const count = document.createElement('span');
+        count.className = 'raid-role-count';
+        count.innerText = counts[item.key] ? counts[item.key] : '';
+
+        header.appendChild(label);
+        header.appendChild(count);
+
+        const icons = document.createElement('div');
+        icons.className = 'raid-role-icons';
+
+        if (grouped[item.key].length) {
+            grouped[item.key].forEach(slot => {
+                const icon = document.createElement('div');
+                icon.className = 'raid-role-icon';
+                icon.style.backgroundColor = getComputedStyle(document.body).getPropertyValue(`--class-${slot.class.toLowerCase()}`);
+                icon.title = `${formatClassName(slot.class)} - ${formatSpecName(slot.specName)}`;
+                icon.appendChild(createSpecIcon(slot.class, slot.specName, 'spec-icon'));
+                icons.appendChild(icon);
+            });
+        } else {
+            const empty = document.createElement('span');
+            empty.className = 'raid-role-empty';
+            empty.innerText = 'Empty';
+            icons.appendChild(empty);
+        }
+
+        row.appendChild(header);
+        row.appendChild(icons);
+        el.appendChild(row);
+    });
+}
+
+function renderPicker() {
+    const el = document.getElementById('specPicker');
+    el.innerHTML = '';
+    
+    // Group specs by Role
+    const specsByRole = {};
+    DISPLAY_ROLES.forEach(r => specsByRole[r] = []);
+
+    // Iterate Classes and group specs
+    Object.keys(DB).sort().forEach(cls => {
+        DB[cls].specs.forEach(spec => {
+            const role = spec.role;
+            if (specsByRole[role]) {
+                specsByRole[role].push({
+                    class: cls,
+                    specName: spec.name,
+                    role: role,
+                    data: spec
+                });
+            }
+        });
+    });
+
+    // Render Roles
+    DISPLAY_ROLES.forEach(role => {
+        const roleDiv = document.createElement('div');
+        roleDiv.className = 'role-section';
+        
+        const header = document.createElement('div');
+        header.className = 'role-header';
+        header.innerText = DISPLAY_ROLE_NAMES[role];
+        roleDiv.appendChild(header);
+
+        const list = document.createElement('div');
+        list.className = 'spec-list';
+
+        // Sort by Class Name
+        specsByRole[role].sort((a,b) => a.class.localeCompare(b.class));
+
+        specsByRole[role].forEach(item => {
+            const btn = document.createElement('div');
+            btn.className = 'spec-btn';
+            btn.dataset.class = item.class;
+            btn.dataset.spec = item.specName;
+            const displaySpecName = formatSpecName(item.specName);
+            const displayClassName = formatClassName(item.class);
+            btn.title = `${displayClassName} - ${displaySpecName}`;
+            btn.setAttribute('aria-label', `${displayClassName} ${displaySpecName}`);
+            btn.appendChild(createSpecIcon(item.class, item.specName, 'spec-icon'));
+            btn.onclick = () => addSpec(item.class, item.specName);
+            
+            // PRE-CALCULATE BUFF IDS FOR REVERSE HIGHLIGHTING
+            const allBuffs = [
+                ...DB[item.class].classBuffs,
+                ...DB[item.class].classResists,
+                ...item.data.buffs,
+                ...item.data.debuffs
+            ];
+            btn.dataset.provides = allBuffs.map(b => simplify(b)).join(' ');
+
+            const previewData = {
+                class: item.class,
+                specName: item.specName,
+                classBuffs: DB[item.class].classBuffs,
+                classResists: DB[item.class].classResists,
+                specBuffs: item.data.buffs,
+                specDebuffs: item.data.debuffs
+            };
+
+            // COMBINED INTERACTION: Tooltip + Buff Highlighting
+            btn.onmouseenter = (e) => {
+                showTooltip(e, previewData);
+                highlightBuffs(previewData);
+            };
+            btn.onmouseleave = () => {
+                hideTooltip();
+                clearBuffHighlights();
+            };
+            list.appendChild(btn);
+        });
+
+        roleDiv.appendChild(list);
+        el.appendChild(roleDiv);
+    });
+}
+
+function renderBuffDashboard() {
+    const map = {
+        physicalBuffs: "physicalBuffs",
+        casterBuffs: "casterBuffs",
+        utilityBuffs: "utilityBuffs",
+        physicalDebuffs: "physicalDebuffs",
+        magicDebuffs: "magicDebuffs",
+        utilityDebuffs: "utilityDebuffs"
+    };
+
+    for (const [cat, buffs] of Object.entries(UI_CATEGORIES)) {
+        const container = document.getElementById(map[cat]);
+        if (!container) continue;
+        container.innerHTML = '';
+        buffs.forEach(buffName => {
+            const simpleId = simplify(buffName);
+            const div = document.createElement('div');
+            div.className = 'buff-item';
+            div.id = `buff-${simpleId}`;
+            
+            // Right-side hovering
+            div.onmouseenter = () => highlightSource(simpleId);
+            div.onmouseleave = () => clearSourceHighlights();
+
+            const displayName = formatBuffName(buffName);
+
+            const nameSpan = document.createElement('span');
+            nameSpan.innerText = displayName;
+            
+            const icon = document.createElement('div');
+            icon.className = 'status-icon';
+            // Placeholder for count
+            icon.innerText = "";
+
+            div.appendChild(nameSpan);
+            div.appendChild(icon);
+            container.appendChild(div);
+        });
+    }
+}
+
+// --- HIGHLIGHTING LOGIC (HOVER BUFF -> SHOW SPECS) ---
+function highlightSource(buffId) {
+    const picker = document.getElementById('specPicker');
+    picker.classList.add('highlighting-active');
+    const buttons = document.querySelectorAll('.spec-btn');
+    buttons.forEach(btn => {
+        if (btn.dataset.provides && btn.dataset.provides.includes(buffId)) {
+            btn.classList.add('highlighted');
+        } else {
+            btn.classList.remove('highlighted');
+        }
+    });
+}
+function clearSourceHighlights() {
+    const picker = document.getElementById('specPicker');
+    picker.classList.remove('highlighting-active');
+    const buttons = document.querySelectorAll('.spec-btn');
+    buttons.forEach(btn => btn.classList.remove('highlighted'));
+}
+
+// --- HIGHLIGHTING LOGIC (HOVER SPEC -> SHOW BUFFS) ---
+function highlightBuffs(data) {
+    const allBuffs = [
+        ...data.classBuffs,
+        ...data.classResists,
+        ...data.specBuffs,
+        ...data.specDebuffs
+    ];
+    
+    allBuffs.forEach(buffName => {
+        const id = `buff-${simplify(buffName)}`;
+        const el = document.getElementById(id);
+        if (el) {
+            el.classList.add('preview-active');
+        }
+    });
+}
+
+function clearBuffHighlights() {
+    const els = document.querySelectorAll('.buff-item.preview-active');
+    els.forEach(el => el.classList.remove('preview-active'));
+}
+
+// --- ROSTER LOGIC ---
+function handleSlotDragStart(event, index) {
+    if (!roster[index]) {
+        event.preventDefault();
+        return;
+    }
+
+    draggedRosterIndex = index;
+    event.currentTarget.classList.add('dragging');
+    event.dataTransfer.effectAllowed = 'move';
+    event.dataTransfer.setData('text/plain', String(index));
+    hideTooltip();
+}
+
+function handleSlotDragOver(event, index) {
+    if (draggedRosterIndex === null || draggedRosterIndex === index) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+    event.currentTarget.classList.add('drop-target');
+}
+
+function handleSlotDrop(event, index) {
+    event.preventDefault();
+
+    const sourceIndex = draggedRosterIndex;
+    clearRosterDragState();
+    if (sourceIndex === null || sourceIndex === index) return;
+
+    const movingSlot = roster[sourceIndex];
+    roster[sourceIndex] = roster[index];
+    roster[index] = movingSlot;
+    suppressRosterClick = true;
+    renderRoster();
+    updateDashboard();
+}
+
+function handleSlotDragEnd() {
+    clearRosterDragState();
+}
+
+function clearRosterDragState() {
+    document.querySelectorAll('.raid-slot.dragging, .raid-slot.drop-target').forEach(slot => {
+        slot.classList.remove('dragging', 'drop-target');
+    });
+    draggedRosterIndex = null;
+}
+
+function handleSlotPointerDown(event, index) {
+    if (event.button !== 0 || !roster[index]) return;
+
+    pointerRosterDrag = {
+        index,
+        startX: event.clientX,
+        startY: event.clientY,
+        dragging: false
+    };
+
+    document.addEventListener('mousemove', handleSlotPointerMove);
+    document.addEventListener('mouseup', handleSlotPointerUp, { once: true });
+}
+
+function handleSlotPointerMove(event) {
+    if (!pointerRosterDrag) return;
+
+    const dx = event.clientX - pointerRosterDrag.startX;
+    const dy = event.clientY - pointerRosterDrag.startY;
+    if (!pointerRosterDrag.dragging && Math.hypot(dx, dy) < 6) return;
+
+    pointerRosterDrag.dragging = true;
+    suppressRosterClick = true;
+    hideTooltip();
+
+    const sourceSlot = document.querySelector(`.raid-slot[data-index="${pointerRosterDrag.index}"]`);
+    sourceSlot?.classList.add('dragging');
+
+    document.querySelectorAll('.raid-slot.drop-target').forEach(slot => slot.classList.remove('drop-target'));
+    const targetSlot = getRosterSlotFromPoint(event.clientX, event.clientY);
+    if (targetSlot && Number(targetSlot.dataset.index) !== pointerRosterDrag.index) {
+        targetSlot.classList.add('drop-target');
+    }
+}
+
+function handleSlotPointerUp(event) {
+    document.removeEventListener('mousemove', handleSlotPointerMove);
+
+    if (!pointerRosterDrag) return;
+    const sourceIndex = pointerRosterDrag.index;
+    const didDrag = pointerRosterDrag.dragging;
+    const targetSlot = didDrag ? getRosterSlotFromPoint(event.clientX, event.clientY) : null;
+    const targetIndex = targetSlot ? Number(targetSlot.dataset.index) : sourceIndex;
+
+    clearRosterDragState();
+    pointerRosterDrag = null;
+    if (didDrag) {
+        setTimeout(() => { suppressRosterClick = false; }, 0);
+    }
+
+    if (didDrag && Number.isInteger(targetIndex) && targetIndex !== sourceIndex) {
+        const movingSlot = roster[sourceIndex];
+        roster[sourceIndex] = roster[targetIndex];
+        roster[targetIndex] = movingSlot;
+        renderRoster();
+        updateDashboard();
+    }
+}
+
+function getRosterSlotFromPoint(x, y) {
+    const element = document.elementFromPoint(x, y);
+    return element?.closest?.('.raid-slot') || null;
+}
+
+function addSpec(clsName, specName) {
+    const idx = roster.findIndex(x => x === null);
+    if (idx === -1) return;
+
+    const clsData = DB[clsName];
+    const specData = clsData.specs.find(s => s.name === specName);
+
+    roster[idx] = {
+        class: clsName,
+        specName: specName,
+        role: specData.role,
+        classBuffs: clsData.classBuffs || [],
+        classResists: clsData.classResists || [],
+        specBuffs: specData.buffs || [],
+        specDebuffs: specData.debuffs || []
+    };
+
+    renderRoster();
+    updateDashboard();
+}
+
+function removeSlot(index) {
+    if (roster[index]) {
+        roster[index] = null;
+        renderRoster();
+        updateDashboard();
+    }
+}
+
+function expandRoster() {
+    if (roster.length >= MAX_ROSTER_SIZE) return;
+    roster = roster.concat(Array(MAX_ROSTER_SIZE - roster.length).fill(null));
+    renderRoster();
+}
+
+function clearRoster() {
+    roster = Array(DEFAULT_ROSTER_SIZE).fill(null);
+    renderRoster();
+    updateDashboard();
+}
+
+function updateDashboard() {
+    // 1. Calculate Counts
+    const counts = {}; // Map of simplified ID -> count
+
+    roster.forEach(slot => {
+        if (!slot) return;
+        const add = (name) => {
+            const id = simplify(name);
+            counts[id] = (counts[id] || 0) + 1;
+        };
+        
+        slot.classBuffs.forEach(add);
+        slot.classResists.forEach(add);
+        slot.specBuffs.forEach(add);
+        slot.specDebuffs.forEach(add);
+    });
+
+    // 2. Update UI
+    document.querySelectorAll('.buff-item').forEach(el => {
+        const id = el.id.replace('buff-', '');
+        const count = counts[id] || 0;
+        const icon = el.querySelector('.status-icon');
+
+        if (count > 0) {
+            el.classList.add('active');
+            icon.innerText = count;
+        } else {
+            el.classList.remove('active');
+            icon.innerText = '';
+        }
+    });
+}
+
+function simplify(str) {
+    return canonicalBuffName(str).toLowerCase().replace(/[^a-z0-9]/g, '');
+}
+
+function canonicalBuffName(name) {
+    return BUFF_ALIASES[name] || name;
+}
+
+function formatBuffName(name) {
+    return DISPLAY_NAMES[canonicalBuffName(name)] || canonicalBuffName(name);
+}
+
+const CLASS_DISPLAY_NAMES = {
+    WITCHDOCTOR: "Witch Doctor",
+    FELSWORN: "Felsworn",
+    WITCHHUNTER: "Witch Hunter",
+    STORMBRINGER: "Stormbringer",
+    KNIGHTXOROTH: "Knight of Xoroth",
+    STARCALLER: "Starcaller",
+    SUNCLERIC: "Sun Cleric",
+    PRIMALIST: "Primalist",
+    BLOODMAGE: "Bloodmage",
+    RUNEMASTER: "Runemaster"
+};
+
+const SPEC_DISPLAY_NAMES = {
+    BLACKKNIGHT: "Black Knight",
+    "BLACK KNIGHT": "Black Knight",
+    MOUNTAINKING: "Mountain King",
+    "MOUNTAIN KING": "Mountain King",
+    "MOON PRIEST": "Moon Priest",
+    "MOON GUARD": "Moon Guard",
+    ROT: "Rotweaver",
+    ROTWEAVER: "Rotweaver"
+};
+
+function titleCaseLabel(name) {
+    return String(name || '')
+        .toLowerCase()
+        .split(/\s+/)
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+}
+
+function formatClassName(clsName) {
+    return CLASS_DISPLAY_NAMES[clsName] || titleCaseLabel(clsName);
+}
+
+function formatSpecName(specName) {
+    return SPEC_DISPLAY_NAMES[specName] || titleCaseLabel(specName);
+}
+
+function specInitials(specName) {
+    return specName
+        .split(/\s+/)
+        .map(part => part[0] || '')
+        .join('')
+        .slice(0, 2) || specName.substring(0, 2);
+}
+
+function textureSlug(textureName) {
+    if (!textureName) return '';
+    return textureName.replace(/\.(blp|png|tga|jpg)$/i, '').toLowerCase();
+}
+
+function classIconUrl(clsName) {
+    const file = CLASS_ICON_FILES[clsName];
+    return file ? `./assets/classes/${file}.png` : '';
+}
+
+function specIconUrls(clsName, specName) {
+    const filename = SPEC_ICON_FILENAMES[clsName]?.[specName];
+    const urls = [];
+    const slug = textureSlug(filename);
+    if (slug) {
+        urls.push(`./assets/icons/${slug}.png`);
+        urls.push(`./assets/icons/${slug}.jpg`);
+    }
+    const classUrl = classIconUrl(clsName);
+    if (classUrl) urls.push(classUrl);
+    return urls;
+}
+
+function createSpecIcon(clsName, specName, className) {
+    const urls = specIconUrls(clsName, specName);
+    const fallback = document.createElement('span');
+    fallback.className = 'spec-fallback';
+    fallback.innerText = specInitials(formatSpecName(specName));
+
+    if (!urls.length) return fallback;
+
+    const img = document.createElement('img');
+    let index = 0;
+    img.className = className;
+    img.alt = `${formatSpecName(specName)} icon`;
+    img.decoding = 'async';
+    img.loading = 'lazy';
+    img.addEventListener('error', () => {
+        index += 1;
+        if (index < urls.length) {
+            img.src = urls[index];
+            return;
+        }
+        img.replaceWith(fallback);
+    });
+    img.src = urls[index];
+    return img;
+}
+
+// --- TOOLTIP ---
+const tooltip = document.getElementById('tooltip');
+const tooltipHeader = document.getElementById('tooltip-header');
+const tooltipBody = document.getElementById('tooltip-body');
+
+function showTooltip(e, data) {
+    tooltip.style.display = 'block';
+    tooltipHeader.innerHTML = `<h4>${formatSpecName(data.specName)}</h4><span>${formatClassName(data.class)}</span>`;
+    let html = '';
+    html += `<div class="tooltip-section"><h5># Class Buffs</h5><ul class="tooltip-list">`;
+    const cBuffs = [...data.classBuffs, ...data.classResists];
+    if (cBuffs.length) {
+        html += cBuffs.map(b => `<li>${formatBuffName(b)}</li>`).join('');
+    } else {
+        html += `<li class="tooltip-empty">- None -</li>`;
+    }
+    html += `</ul></div>`;
+    html += `<div class="tooltip-section"><h5># Spec Buffs</h5><ul class="tooltip-list">`;
+    if (data.specBuffs.length) {
+        html += data.specBuffs.map(b => `<li>${formatBuffName(b)}</li>`).join('');
+    } else {
+        html += `<li class="tooltip-empty">- None -</li>`;
+    }
+    html += `</ul></div>`;
+    if (data.specDebuffs.length) {
+        html += `<div class="tooltip-section"><h5># Boss Debuffs</h5><ul class="tooltip-list tooltip-debuff">`;
+        html += data.specDebuffs.map(b => `<li>${formatBuffName(b)}</li>`).join('');
+        html += `</ul></div>`;
+    }
+    tooltipBody.innerHTML = html;
+    const x = e.clientX + 15;
+    const y = e.clientY + 15;
+    if (y + tooltip.offsetHeight > window.innerHeight) {
+        tooltip.style.top = Math.max(10, e.clientY - tooltip.offsetHeight - 10) + 'px';
+    } else {
+        tooltip.style.top = y + 'px';
+    }
+    tooltip.style.left = Math.min(x, window.innerWidth - tooltip.offsetWidth - 10) + 'px';
+}
+function hideTooltip() {
+    tooltip.style.display = 'none';
+}
+
+init();
+
+</script>
+</body>
+</html>

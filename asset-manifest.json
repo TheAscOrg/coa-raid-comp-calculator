@@ -1,0 +1,631 @@
+﻿{
+    "generatedAt":  "2026-06-29T17:50:13.6604940Z",
+    "classCopied":  [
+                        "barbarian",
+                        "witchdoctor",
+                        "demonhunter",
+                        "witchhunter",
+                        "stormbringer",
+                        "cultist",
+                        "fleshwarden",
+                        "guardian",
+                        "starcaller",
+                        "suncleric",
+                        "monk",
+                        "prophet",
+                        "sonofarugal",
+                        "pyromancer",
+                        "spiritmage",
+                        "ranger",
+                        "reaper",
+                        "chronomancer",
+                        "necromancer",
+                        "wildwalker",
+                        "tinker"
+                    ],
+    "classMissing":  [
+
+                     ],
+    "icons":  [
+                  {
+                      "slug":  "achievement_dungeon_utgardekeep_normal",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_dungeon_utgardekeep_normal.png"
+                  },
+                  {
+                      "slug":  "ability_warrior_bloodfrenzy",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_warrior_bloodfrenzy.jpg"
+                  },
+                  {
+                      "slug":  "5_axe_(3)_border",
+                      "source":  "local",
+                      "file":  "assets/icons/5_axe_(3)_border.png"
+                  },
+                  {
+                      "slug":  "ability_hunter_survivalinstincts",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_hunter_survivalinstincts.jpg"
+                  },
+                  {
+                      "slug":  "inv_misc_idol_02",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_misc_idol_02.jpg"
+                  },
+                  {
+                      "slug":  "inv_misc_cauldron_nature",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_misc_cauldron_nature.png"
+                  },
+                  {
+                      "slug":  "spell_shadow_fingerofdeath",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_shadow_fingerofdeath.png"
+                  },
+                  {
+                      "slug":  "ability_warlock_demonicpower",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_warlock_demonicpower.jpg"
+                  },
+                  {
+                      "slug":  "inv_weapon_glave_01",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_weapon_glave_01.jpg"
+                  },
+                  {
+                      "slug":  "ability_rogue_stayofexecution",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_rogue_stayofexecution.png"
+                  },
+                  {
+                      "slug":  "inv_helmet_23",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_helmet_23.jpg"
+                  },
+                  {
+                      "slug":  "_d3preparation",
+                      "source":  "local",
+                      "file":  "assets/icons/_d3preparation.png"
+                  },
+                  {
+                      "slug":  "achievement_boss_thorim",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_boss_thorim.png"
+                  },
+                  {
+                      "slug":  "ability_vehicle_electrocharge",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_vehicle_electrocharge.jpg"
+                  },
+                  {
+                      "slug":  "spell_nature_invisibilitytotem",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/spell_nature_invisibilitytotem.jpg"
+                  },
+                  {
+                      "slug":  "spell_shadow_rune",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/spell_shadow_rune.jpg"
+                  },
+                  {
+                      "slug":  "inv_shield_grimbatolraid_d_02",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_shield_grimbatolraid_d_02.jpg"
+                  },
+                  {
+                      "slug":  "achievement_boss_cthun",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/achievement_boss_cthun.jpg"
+                  },
+                  {
+                      "slug":  "inv_sword_61",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_sword_61.png"
+                  },
+                  {
+                      "slug":  "ability_warrior_swordandboard",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_warrior_swordandboard.jpg"
+                  },
+                  {
+                      "slug":  "achievement_bg_killflagcarriers_grabflag_capit",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/achievement_bg_killflagcarriers_grabflag_capit.jpg"
+                  },
+                  {
+                      "slug":  "achievement_bg_winwsg_3-0",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/achievement_bg_winwsg_3-0.jpg"
+                  },
+                  {
+                      "slug":  "spell_frost_manarecharge",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_frost_manarecharge.png"
+                  },
+                  {
+                      "slug":  "_liquidstone_water",
+                      "source":  "local",
+                      "file":  "assets/icons/_liquidstone_water.png"
+                  },
+                  {
+                      "slug":  "_diablo3_arrowrain_mage",
+                      "source":  "local",
+                      "file":  "assets/icons/_diablo3_arrowrain_mage.png"
+                  },
+                  {
+                      "slug":  "ability_hunter_carve",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_hunter_carve.jpg"
+                  },
+                  {
+                      "slug":  "ability_paladin_sacredcleansing",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_paladin_sacredcleansing.jpg"
+                  },
+                  {
+                      "slug":  "inv_valkiergoldpet",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_valkiergoldpet.png"
+                  },
+                  {
+                      "slug":  "ability_racial_finalverdict",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_racial_finalverdict.jpg"
+                  },
+                  {
+                      "slug":  "spell_holy_crusade",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_holy_crusade.png"
+                  },
+                  {
+                      "slug":  "_d3deadlyreach",
+                      "source":  "local",
+                      "file":  "assets/icons/_d3deadlyreach.png"
+                  },
+                  {
+                      "slug":  "ability_paladin_blessedhands",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_paladin_blessedhands.jpg"
+                  },
+                  {
+                      "slug":  "_d3blindingflash",
+                      "source":  "local",
+                      "file":  "assets/icons/_d3blindingflash.png"
+                  },
+                  {
+                      "slug":  "spell_shadow_lifedrain",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_shadow_lifedrain.png"
+                  },
+                  {
+                      "slug":  "custom_t_handsofblood_border",
+                      "source":  "local",
+                      "file":  "assets/icons/custom_t_handsofblood_border.png"
+                  },
+                  {
+                      "slug":  "spell_deathknight_gnaw_ghoul",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/spell_deathknight_gnaw_ghoul.jpg"
+                  },
+                  {
+                      "slug":  "achievement_dungeon_jeshowlis",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/achievement_dungeon_jeshowlis.jpg"
+                  },
+                  {
+                      "slug":  "ability_mage_fierypayback",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_mage_fierypayback.png"
+                  },
+                  {
+                      "slug":  "inv_weapon_hand_06",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_weapon_hand_06.jpg"
+                  },
+                  {
+                      "slug":  "ability_warlock_backdraft",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_warlock_backdraft.jpg"
+                  },
+                  {
+                      "slug":  "ability_rogue_rollthebones02",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_rogue_rollthebones02.png"
+                  },
+                  {
+                      "slug":  "ability_hunter_longshots",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_hunter_longshots.jpg"
+                  },
+                  {
+                      "slug":  "inv_misc_map02",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_misc_map02.jpg"
+                  },
+                  {
+                      "slug":  "inv_artifact_thalkielsdiscord",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_artifact_thalkielsdiscord.png"
+                  },
+                  {
+                      "slug":  "ability_rogue_sealfate",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_rogue_sealfate.jpg"
+                  },
+                  {
+                      "slug":  "ability_touchofanimus",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/ability_touchofanimus.jpg"
+                  },
+                  {
+                      "slug":  "_auracloak_ice",
+                      "source":  "local",
+                      "file":  "assets/icons/_auracloak_ice.png"
+                  },
+                  {
+                      "slug":  "nozdormuicon",
+                      "source":  "local",
+                      "file":  "assets/icons/nozdormuicon.png"
+                  },
+                  {
+                      "slug":  "inv_enchant_philostone_lv2",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_enchant_philostone_lv2.jpg"
+                  },
+                  {
+                      "slug":  "inv_wand_1h_pvp400_c_01",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_wand_1h_pvp400_c_01.jpg"
+                  },
+                  {
+                      "slug":  "_d3wallofzombies",
+                      "source":  "local",
+                      "file":  "assets/icons/_d3wallofzombies.png"
+                  },
+                  {
+                      "slug":  "achievement_dungeon_naxxramas_25man",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/achievement_dungeon_naxxramas_25man.jpg"
+                  },
+                  {
+                      "slug":  "achievement_boss_amnennar_the_coldbringer",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_boss_amnennar_the_coldbringer.png"
+                  },
+                  {
+                      "slug":  "inv_musket_04",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_musket_04.jpg"
+                  },
+                  {
+                      "slug":  "inv_misc_enggizmos_06",
+                      "source":  "downloaded",
+                      "file":  "assets/icons/inv_misc_enggizmos_06.jpg"
+                  },
+                  {
+                      "slug":  "inv_gizmo_rocketbootextreme",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_gizmo_rocketbootextreme.png"
+                  },
+                  {
+                      "slug":  "inv_misc_hook_01",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_misc_hook_01.png"
+                  },
+                  {
+                      "slug":  "spell_shadow_shadowandflame",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_shadow_shadowandflame.png"
+                  },
+                  {
+                      "slug":  "inv_belt_18",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_belt_18.png"
+                  },
+                  {
+                      "slug":  "ability_warlock_improvedsoulleech",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_warlock_improvedsoulleech.png"
+                  },
+                  {
+                      "slug":  "_bearattack_brownfire",
+                      "source":  "local",
+                      "file":  "assets/icons/_bearattack_brownfire.png"
+                  },
+                  {
+                      "slug":  "inv_elementalearth2",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_elementalearth2.png"
+                  },
+                  {
+                      "slug":  "item_earthenmight",
+                      "source":  "local",
+                      "file":  "assets/icons/item_earthenmight.png"
+                  },
+                  {
+                      "slug":  "spell_shaman_blessingofeternals",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_shaman_blessingofeternals.png"
+                  },
+                  {
+                      "slug":  "_d3arcanetorrent",
+                      "source":  "local",
+                      "file":  "assets/icons/_d3arcanetorrent.png"
+                  },
+                  {
+                      "slug":  "70_inscription_vantus_rune_azure",
+                      "source":  "local",
+                      "file":  "assets/icons/70_inscription_vantus_rune_azure.png"
+                  },
+                  {
+                      "slug":  "inv_weapon_shortblade_79",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_weapon_shortblade_79.png"
+                  },
+                  {
+                      "slug":  "inv_pet_spiderdemon",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_pet_spiderdemon.png"
+                  },
+                  {
+                      "slug":  "rogue_paralytic_poison",
+                      "source":  "local",
+                      "file":  "assets/icons/rogue_paralytic_poison.png"
+                  },
+                  {
+                      "slug":  "inv_nerubianbeetlepet_green",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_nerubianbeetlepet_green.png"
+                  },
+                  {
+                      "slug":  "_liquidstone_poison",
+                      "source":  "local",
+                      "file":  "assets/icons/_liquidstone_poison.png"
+                  },
+                  {
+                      "slug":  "achievement_dungeon_coablackdragonflight",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_dungeon_coablackdragonflight.png"
+                  },
+                  {
+                      "slug":  "_orc_06",
+                      "source":  "local",
+                      "file":  "assets/icons/_orc_06.png"
+                  },
+                  {
+                      "slug":  "inv_axe_2h_artifactmaw_d_01",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_axe_2h_artifactmaw_d_01.png"
+                  },
+                  {
+                      "slug":  "spell_brew_wheat",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_brew_wheat.png"
+                  },
+                  {
+                      "slug":  "trade_archaeology_troll_voodoodoll",
+                      "source":  "local",
+                      "file":  "assets/icons/trade_archaeology_troll_voodoodoll.png"
+                  },
+                  {
+                      "slug":  "shadowhunter",
+                      "source":  "local",
+                      "file":  "assets/icons/shadowhunter.png"
+                  },
+                  {
+                      "slug":  "_auracloak_felfire",
+                      "source":  "local",
+                      "file":  "assets/icons/_auracloak_felfire.png"
+                  },
+                  {
+                      "slug":  "inv_sword_1h_artifactfelomelorn_d_03dual",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_sword_1h_artifactfelomelorn_d_03dual.png"
+                  },
+                  {
+                      "slug":  "ability_demonhunter_demonictrample",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_demonhunter_demonictrample.png"
+                  },
+                  {
+                      "slug":  "custom_14_summon_dogs_border",
+                      "source":  "local",
+                      "file":  "assets/icons/custom_14_summon_dogs_border.png"
+                  },
+                  {
+                      "slug":  "novart_physical_ability_(49)_border",
+                      "source":  "local",
+                      "file":  "assets/icons/novart_physical_ability_(49)_border.png"
+                  },
+                  {
+                      "slug":  "inv_progenitorelemental_black",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_progenitorelemental_black.png"
+                  },
+                  {
+                      "slug":  "ability_shawaterelemental_reform",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_shawaterelemental_reform.png"
+                  },
+                  {
+                      "slug":  "nhi_frozenlightning_border",
+                      "source":  "local",
+                      "file":  "assets/icons/nhi_frozenlightning_border.png"
+                  },
+                  {
+                      "slug":  "warrior_skullbanner",
+                      "source":  "local",
+                      "file":  "assets/icons/warrior_skullbanner.png"
+                  },
+                  {
+                      "slug":  "5_sumimparmy_border",
+                      "source":  "local",
+                      "file":  "assets/icons/5_sumimparmy_border.png"
+                  },
+                  {
+                      "slug":  "ability_warlock_improveddemonictactics",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_warlock_improveddemonictactics.png"
+                  },
+                  {
+                      "slug":  "epic_rpg_icon_pack_brutal_icon_0001s_0000_warrior_border",
+                      "source":  "local",
+                      "file":  "assets/icons/epic_rpg_icon_pack_brutal_icon_0001s_0000_warrior_border.png"
+                  },
+                  {
+                      "slug":  "achievement_guildperk_everyones_a_hero",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_guildperk_everyones_a_hero.png"
+                  },
+                  {
+                      "slug":  "_human_06",
+                      "source":  "local",
+                      "file":  "assets/icons/_human_06.png"
+                  },
+                  {
+                      "slug":  "custom_paladinskill_24_border",
+                      "source":  "local",
+                      "file":  "assets/icons/custom_paladinskill_24_border.png"
+                  },
+                  {
+                      "slug":  "nhi_firesword_border",
+                      "source":  "local",
+                      "file":  "assets/icons/nhi_firesword_border.png"
+                  },
+                  {
+                      "slug":  "inv_staff_2h_nazmirraid_d_01",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_staff_2h_nazmirraid_d_01.png"
+                  },
+                  {
+                      "slug":  "epic_rpg_icon_pack_blood_0003s_0000_hand_border",
+                      "source":  "local",
+                      "file":  "assets/icons/epic_rpg_icon_pack_blood_0003s_0000_hand_border.png"
+                  },
+                  {
+                      "slug":  "inv_misc_food_legion_gooamber_pool",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_misc_food_legion_gooamber_pool.png"
+                  },
+                  {
+                      "slug":  "nhi_foreshadowblood_border",
+                      "source":  "local",
+                      "file":  "assets/icons/nhi_foreshadowblood_border.png"
+                  },
+                  {
+                      "slug":  "ability_racial_viciousness",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_racial_viciousness.png"
+                  },
+                  {
+                      "slug":  "ability_rogue_energeticrecovery",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_rogue_energeticrecovery.png"
+                  },
+                  {
+                      "slug":  "inv_archaeology_70_tauren_stonewoodbow",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_archaeology_70_tauren_stonewoodbow.png"
+                  },
+                  {
+                      "slug":  "inv_legion_faction_dreamweavers",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_legion_faction_dreamweavers.png"
+                  },
+                  {
+                      "slug":  "achievement_boss_infinitecorruptor",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_boss_infinitecorruptor.png"
+                  },
+                  {
+                      "slug":  "inv_trinket_80_kultiras02a",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_trinket_80_kultiras02a.png"
+                  },
+                  {
+                      "slug":  "achievement_guildperk_workingovertime",
+                      "source":  "local",
+                      "file":  "assets/icons/achievement_guildperk_workingovertime.png"
+                  },
+                  {
+                      "slug":  "spell_shadow_plaguecloud",
+                      "source":  "local",
+                      "file":  "assets/icons/spell_shadow_plaguecloud.png"
+                  },
+                  {
+                      "slug":  "_undead_03",
+                      "source":  "local",
+                      "file":  "assets/icons/_undead_03.png"
+                  },
+                  {
+                      "slug":  "wc3lichoriginal",
+                      "source":  "local",
+                      "file":  "assets/icons/wc3lichoriginal.png"
+                  },
+                  {
+                      "slug":  "nhi_corruptionfire_border",
+                      "source":  "local",
+                      "file":  "assets/icons/nhi_corruptionfire_border.png"
+                  },
+                  {
+                      "slug":  "custom_t_phoenix_border",
+                      "source":  "local",
+                      "file":  "assets/icons/custom_t_phoenix_border.png"
+                  },
+                  {
+                      "slug":  "inv_misc_head_dragon_bronze",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_misc_head_dragon_bronze.png"
+                  },
+                  {
+                      "slug":  "yshaarjicon",
+                      "source":  "local",
+                      "file":  "assets/icons/yshaarjicon.png"
+                  },
+                  {
+                      "slug":  "nzothicon",
+                      "source":  "local",
+                      "file":  "assets/icons/nzothicon.png"
+                  },
+                  {
+                      "slug":  "cthunicon",
+                      "source":  "local",
+                      "file":  "assets/icons/cthunicon.png"
+                  },
+                  {
+                      "slug":  "yogg-saronicon",
+                      "source":  "local",
+                      "file":  "assets/icons/yogg-saronicon.png"
+                  },
+                  {
+                      "slug":  "inv_pet_wardenowl",
+                      "source":  "local",
+                      "file":  "assets/icons/inv_pet_wardenowl.png"
+                  },
+                  {
+                      "slug":  "artifactability_balancedruid_newmoon",
+                      "source":  "local",
+                      "file":  "assets/icons/artifactability_balancedruid_newmoon.png"
+                  },
+                  {
+                      "slug":  "custom_t_nhance_rpg_icons_magicmoonbuff_border",
+                      "source":  "local",
+                      "file":  "assets/icons/custom_t_nhance_rpg_icons_magicmoonbuff_border.png"
+                  },
+                  {
+                      "slug":  "custom_t_nhance_rpg_icons_holymeditation_border",
+                      "source":  "local",
+                      "file":  "assets/icons/custom_t_nhance_rpg_icons_holymeditation_border.png"
+                  },
+                  {
+                      "slug":  "ability_paladin_conviction",
+                      "source":  "local",
+                      "file":  "assets/icons/ability_paladin_conviction.png"
+                  },
+                  {
+                      "slug":  "item_holyspark",
+                      "source":  "local",
+                      "file":  "assets/icons/item_holyspark.png"
+                  }
+              ]
+}
