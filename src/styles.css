@@ -482,39 +482,26 @@
             min-width: 0;
             position: relative;
             z-index: 3;
-            padding: 0 9px 0 14px;
+            padding: 0 9px;
             border-radius: 6px;
             border: 1px solid rgba(var(--role-title-rgb), 0.34);
-            background:
-                linear-gradient(90deg, rgba(var(--role-title-rgb), 0.16), rgba(var(--role-title-rgb), 0.05) 62%, rgba(16, 18, 19, 0.94)),
-                #101213;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 10px rgba(var(--role-title-rgb), 0.1);
-            text-shadow: 0 0 12px rgba(var(--role-title-rgb), 0.22);
-        }
-
-        .raid-role-header::before {
-            content: "";
-            position: absolute;
-            left: 7px;
-            top: 7px;
-            bottom: 7px;
-            width: 3px;
-            border-radius: 999px;
-            background: var(--role-title-color);
-            box-shadow: 0 0 12px rgba(var(--role-title-rgb), 0.38);
+            background: #101213;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 10px rgba(var(--role-title-rgb), 0.08);
         }
 
         .raid-role-label {
-            color: #f4f0e6;
+            color: var(--role-title-color);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
+            text-shadow: 0 0 14px rgba(var(--role-title-rgb), 0.42);
         }
 
         .raid-role-count {
             color: var(--role-title-color);
             font-variant-numeric: tabular-nums;
             flex: 0 0 auto;
+            text-shadow: 0 0 14px rgba(var(--role-title-rgb), 0.4);
         }
 
         .raid-role-icons {
@@ -701,8 +688,8 @@
             align-items: center;
             position: relative;
             margin-bottom: 9px;
-            padding: 0 11px 0 16px;
-            color: #f4f0e6;
+            padding: 0 11px;
+            color: var(--section-color);
             font-size: 13px;
             font-weight: 900;
             text-transform: uppercase;
@@ -711,19 +698,7 @@
             border-radius: 7px;
             background: #101213;
             box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 0 0 1px rgba(0, 0, 0, 0.22);
-            text-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.22);
-        }
-
-        .section-title::before {
-            content: "";
-            position: absolute;
-            left: 7px;
-            top: 8px;
-            bottom: 8px;
-            width: 3px;
-            border-radius: 999px;
-            background: var(--section-color);
-            box-shadow: 0 0 12px rgba(var(--section-color-rgb), 0.32);
+            text-shadow: 0 0 15px rgba(var(--section-color-rgb), 0.46);
         }
 
         .section-title.physical-buff {
@@ -744,19 +719,16 @@
         .section-title.physical-debuff {
             --section-color: #e06a5d;
             --section-color-rgb: 224, 106, 93;
-            color: #ffe1dd;
         }
 
         .section-title.magic-debuff {
             --section-color: #a984d6;
             --section-color-rgb: 169, 132, 214;
-            color: #eadfff;
         }
 
         .section-title.utility-debuff {
             --section-color: #d6a445;
             --section-color-rgb: 214, 164, 69;
-            color: #f6e6c3;
         }
         
         .buff-grid {
