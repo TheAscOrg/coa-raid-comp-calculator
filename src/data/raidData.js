@@ -282,9 +282,9 @@ export const CLASS_ICON_FILES = {
 
 export const SPEC_ICON_FILENAMES = {
     BARBARIAN: {
-        ANCESTRY: "_Diablo3_Execute_Druid",
-        BRUTALITY: "ability_warrior_endlessrage",
-        HEADHUNTING: "ability_hunter_hatchettoss"
+        ANCESTRY: "spell_brew_wheat",
+        BRUTALITY: "_Orc_06",
+        HEADHUNTING: "inv_axe_2h_artifactmaw_d_01"
     },
     WITCHDOCTOR: {
         SHADOWHUNTING: "ShadowHunter",
@@ -292,20 +292,20 @@ export const SPEC_ICON_FILENAMES = {
         BREWING: "INV_Misc_Cauldron_Nature"
     },
     FELSWORN: {
-        INFERNAL: "spell_fire_fireballgreen",
-        TYRANT: "Spell_Shadow_ZDemonFormGreen",
-        SLAYING: "ability_demonhunter_hatefulstrike"
+        INFERNAL: "_AuraCloak_Felfire",
+        TYRANT: "ability_demonhunter_demonictrample",
+        SLAYING: "inv_sword_1h_artifactfelomelorn_d_03dual"
     },
     WITCHHUNTER: {
-        INQUISITION: "inv_misc_trinket6oih_lanterna1",
-        HOUNDMASTER: "inv_wolfdraenormountshadow",
-        "BLACK KNIGHT": "nhi_brokensword_Border",
-        BOLTSLINGER: "inv_weapon_crossbow_21"
+        INQUISITION: "Spell_Shadow_ShadowandFlame",
+        HOUNDMASTER: "custom_14_summon_dogs_Border",
+        "BLACK KNIGHT": "novart_physical_ability_(49)_Border",
+        BOLTSLINGER: "_d3preparation"
     },
     STORMBRINGER: {
-        MAELSTROM: "Spell_Frost_SummonWaterElemental",
-        LIGHTNING: "Spell_Lightning_LightningBolt01",
-        WIND: "ability_skyreach_four_wind"
+        MAELSTROM: "ability_shawaterelemental_reform",
+        LIGHTNING: "nhi_frozenlightning_Border",
+        WIND: "inv_progenitorelemental_black"
     },
     CULTIST: {
         HERETIC: "Yogg-SaronIcon",
@@ -314,85 +314,85 @@ export const SPEC_ICON_FILENAMES = {
         GODBLADE: "NZothIcon"
     },
     KNIGHTXOROTH: {
-        HELLFIRE: "ability_paladin_bladeofjustice",
-        DEFIANCE: "spell_warlock_soulburn_haunt",
-        WAR: "ability_warlock_baneofhavoc"
+        HELLFIRE: "5_sumimparmy_Border",
+        DEFIANCE: "Ability_Warlock_ImprovedDemonicTactics",
+        WAR: "warrior_skullbanner"
     },
     GUARDIAN: {
-        VANGUARD: "TowerFormation",
-        GLADIATOR: "AssaultFormation",
-        INSPIRATION: "LineFormation"
+        VANGUARD: "_Human_06",
+        GLADIATOR: "epic_rpg_icon_pack_brutal_icon_0001s_0000_warrior_Border",
+        INSPIRATION: "ACHIEVEMENT_GUILDPERK_EVERYONES_A_HERO"
     },
     STARCALLER: {
-        "MOON PRIEST": "Spell_Frost_ManaRecharge",
-        WARDEN: "inv_wand_1h_430nightelf_c_01",
-        SENTINEL: "spell_hunter_exoticmunitions_frozen",
-        "MOON GUARD": "Spell_Holy_ImprovedResistanceAuras"
+        "MOON PRIEST": "custom_T_Nhance_RPG_Icons_MagicMoonBuff_Border",
+        WARDEN: "inv_pet_wardenowl",
+        SENTINEL: "_Diablo3_ArrowRain_Mage",
+        "MOON GUARD": "artifactability_balancedruid_newmoon"
     },
     SUNCLERIC: {
-        BLESSINGS: "ability_paladin_lightoftheprotector",
-        VALKYRIE: "inv_glaive_1h_artifactaldrochi_d_02dual",
-        PIETY: "paladin_holy",
-        SERAPHIM: "misc_legionfall_paladin"
+        BLESSINGS: "item_holyspark",
+        VALKYRIE: "inv_valkiergoldpet",
+        PIETY: "custom_T_Nhance_RPG_Icons_HolyMeditation_Border",
+        SERAPHIM: "ability_paladin_conviction"
     },
     TEMPLAR: {
-        ZEALOT: "inv_sword_2h_artifactashbringerpurified_d_02",
-        CRUSADER: "nhi_holy_toglory_Border",
-        OATHKEEPER: "priest_icon_innewill"
+        ZEALOT: "custom_Paladinskill_24_Border",
+        CRUSADER: "nhi_firesword_Border",
+        OATHKEEPER: "inv_staff_2h_nazmirraid_d_01"
     },
     PRIMALIST: {
-        WILDWALKER: "inv_hand_1h_artifactursoc_d_01",
+        WILDWALKER: "ability_druid_ripandtear",
         "MOUNTAIN KING": "ability_racial_avatar",
-        GEOMANCY: "Ability_Rogue_ThrowingSpecialization",
-        GROVEKEEPER: "Spell_Shaman_SpiritLink"
+        GEOMANCY: "inv_custom_hearthstone_fire",
+        GROVEKEEPER: "ui_darkshore_warfront_alliance_keeper_of_the_grove"
     },
     BLOODMAGE: {
-        SANGUINE: "ability_revendreth_warlock",
-        FLESHWEAVER: "nhi_bloodhealth_Border",
-        ACCURSED: "artifactability_feraldruid_ashamanesbite",
+        SANGUINE: "epic_rpg_icon_pack_blood_0003s_0000_hand_Border",
+        FLESHWEAVER: "inv_misc_food_legion_gooamber_pool",
+        ACCURSED: "nhi_foreshadowblood_Border",
         ETERNAL: "ability_racial_viciousness"
     },
     PYROMANCER: {
-        FLAMEWEAVING: "Ability_Warlock_Backdraft",
-        DRACONIC: "INV_Misc_Head_Dragon_01",
-        INCINERATION: "Ability_Mage_FieryPayback"
+        FLAMEWEAVING: "custom_T_Phoenix_Border",
+        DRACONIC: "inv_misc_head_dragon_bronze",
+        INCINERATION: "nhi_corruptionfire_Border"
     },
     RANGER: {
-        BRIGAND: "Ability_Rogue_CutToTheChase",
-        ARCHERY: "Ability_Hunter_RunningShot",
-        FARSTRIDER: "INV_Ascend_horn"
+        BRIGAND: "ability_rogue_energeticrecovery",
+        ARCHERY: "inv_archaeology_70_tauren_stonewoodbow",
+        FARSTRIDER: "inv_legion_faction_dreamweavers"
     },
     REAPER: {
-        SOUL: "ability_rogue_ghostpirate",
-        HARVEST: "ability_demonhunter_bladedance",
-        DOMINATION: "spell_deathknight_frozenruneweapon"
+        SOUL: "nhi_souldarkening_Border",
+        HARVEST: "ability_revendreth_deathknight",
+        DOMINATION: "nhi_ghosthand_Border"
     },
     RUNEMASTER: {
-        GLYPHIC: "shaman_talent_elementalblast",
-        RIFTBLADE: "Warpblade",
-        ENGRAVEMENT: "custom_T_Nhance_RPG_Icons_MagicKeeper_Border"
+        GLYPHIC: "70_inscription_vantus_rune_azure",
+        RIFTBLADE: "trade_archaeology_zinrokh_sword",
+        ENGRAVEMENT: "novart_magicspell_(14)_Border"
     },
     CHRONOMANCER: {
-        TIME: "spell_mage_altertime",
-        INFINITE: "nhi_timewarp_Border",
+        TIME: "inv_trinket_80_kultiras02a",
+        INFINITE: "achievement_boss_infinitecorruptor",
         ARTIFICER: "achievement_guildperk_workingovertime"
     },
     NECROMANCER: {
-        ANIMATION: "Spell_Shadow_NightOfTheDead",
-        DEATH: "Spell_Shadow_DeathCoil",
-        RIME: "Spell_Frost_Frost"
+        ANIMATION: "_Undead_03",
+        DEATH: "Spell_Shadow_PlagueCloud",
+        RIME: "WC3LichOriginal"
     },
     VENOMANCER: {
-        STALKING: "inv_pet_spiderdemon2",
-        VIZIER: "ability_hunter_onewithnature",
+        STALKING: "_D3corpsespiders",
+        VIZIER: "achievement_boss_eldernadox",
         FORTITUDE: "inv_nerubianbeetlepet_green",
-        ROT: "_VenomOrb_Green",
-        ROTWEAVER: "_VenomOrb_Green"
+        ROT: "WeaverForm",
+        ROTWEAVER: "WeaverForm"
     },
     TINKER: {
-        DEMOLITION: "inv_misc_blackironbomb",
-        MECHANICS: "spell_mekkatorque_bot_redwrench",
-        INVENTION: "inv_engineering_reavesmodule"
+        DEMOLITION: "inv_eng_bombfire",
+        MECHANICS: "inv_engineering_815_uberspanner",
+        INVENTION: "inv_plate_mechagnome_c_01shoulder"
     }
 };
 
