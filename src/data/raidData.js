@@ -369,8 +369,8 @@ export const SPEC_ICON_FILENAMES = {
     },
     RUNEMASTER: {
         GLYPHIC: "70_inscription_vantus_rune_azure",
-        RIFTBLADE: "trade_archaeology_zinrokh_sword",
-        ENGRAVEMENT: "novart_magicspell_(14)_Border"
+        RIFTBLADE: "Warpblade",
+        ENGRAVEMENT: "custom_T_Nhance_RPG_Icons_MagicKeeper_Border"
     },
     CHRONOMANCER: {
         TIME: "inv_trinket_80_kultiras02a",
