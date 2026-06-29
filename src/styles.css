@@ -287,6 +287,7 @@
             --role-outline-start: rgba(91, 188, 255, 0.95);
             --role-outline-end: rgba(36, 104, 255, 0.9);
             --role-outline-glow: rgba(76, 159, 255, 0.28);
+            --role-frame-color: #15538a;
             --role-title-color: #5bbcff;
             --role-title-rgb: 91, 188, 255;
         }
@@ -295,6 +296,7 @@
             --role-outline-start: rgba(89, 231, 142, 0.95);
             --role-outline-end: rgba(22, 142, 83, 0.9);
             --role-outline-glow: rgba(72, 214, 129, 0.26);
+            --role-frame-color: #166b3f;
             --role-title-color: #59e78e;
             --role-title-rgb: 89, 231, 142;
         }
@@ -303,6 +305,7 @@
             --role-outline-start: rgba(255, 220, 99, 0.96);
             --role-outline-end: rgba(219, 132, 35, 0.92);
             --role-outline-glow: rgba(255, 188, 58, 0.28);
+            --role-frame-color: #9a5d16;
             --role-title-color: #ffdc63;
             --role-title-rgb: 255, 220, 99;
         }
@@ -311,6 +314,7 @@
             --role-outline-start: rgba(255, 103, 91, 0.96);
             --role-outline-end: rgba(176, 35, 35, 0.92);
             --role-outline-glow: rgba(234, 62, 52, 0.28);
+            --role-frame-color: #892323;
             --role-title-color: #ff675b;
             --role-title-rgb: 255, 103, 91;
         }
@@ -357,7 +361,7 @@
             pointer-events: none;
             border-radius: 6px;
             padding: 3px;
-            background: var(--role-title-color);
+            background: var(--role-frame-color);
             box-shadow:
                 0 0 18px var(--role-outline-glow),
                 inset 0 0 10px rgba(255, 255, 255, 0.16);
