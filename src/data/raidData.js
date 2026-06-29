@@ -299,7 +299,7 @@ export const SPEC_ICON_FILENAMES = {
     WITCHHUNTER: {
         INQUISITION: "Spell_Shadow_ShadowandFlame",
         HOUNDMASTER: "custom_14_summon_dogs_Border",
-        "BLACK KNIGHT": "novart_physical_ability_(49)_Border",
+        "BLACK KNIGHT": "nhi_brokensword_Border",
         BOLTSLINGER: "_d3preparation"
     },
     STORMBRINGER: {
