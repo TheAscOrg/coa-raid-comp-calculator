@@ -342,7 +342,7 @@ export const SPEC_ICON_FILENAMES = {
     },
     PRIMALIST: {
         WILDWALKER: "ability_druid_ripandtear",
-        "MOUNTAIN KING": "Spell_Holy_Devotion",
+        "MOUNTAIN KING": "ability_racial_avatar",
         GEOMANCY: "inv_custom_hearthstone_fire",
         GROVEKEEPER: "ui_darkshore_warfront_alliance_keeper_of_the_grove"
     },
